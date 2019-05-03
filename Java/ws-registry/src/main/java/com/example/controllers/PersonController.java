@@ -50,24 +50,6 @@ public class PersonController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
-	@GetMapping(path = "/account")
-	@ApiOperation(value = "${ws.swagger.endpoint.person.getAllWithAccount.description}")
-	public ResponseEntity<Page<Person>> getAllWithAccount(@ApiParam(
-		value = "${ws.swagger.endpoint.person.param.cpf.description}") @RequestParam(value = "cpf",
-			required = false) final String cpf, @ApiParam(
-				value = "${ws.swagger.endpoint.person.param.name.description}") @RequestParam(
-					value = "name", required = false) final String name, @ApiParam(
-						value = "${ws.swagger.endpoint.account.authentication.param.login.description}") @RequestParam(
-							value = "authentication", required = false) final String authentication, @ApiParam(
-					value = "${ws.swagger.endpoint.generics.param.page.description}") @RequestParam(
-						value = "page", required = false) Integer page, @ApiParam(
-							value = "${ws.swagger.endpoint.generics.param.size.description}") @RequestParam(
-								value = "size", required = false) Integer size) {
-		final Page<Person> result = personService.findAllWithAccount(cpf, name, authentication,
-			page, size);
-		return new ResponseEntity<>(result, HttpStatus.OK);
-	}
-
 	@GetMapping(path = "{personId}")
 	@ApiOperation(value = "${ws.swagger.endpoint.person.getOne.description}")
 	public ResponseEntity<?> getOne(@ApiParam(

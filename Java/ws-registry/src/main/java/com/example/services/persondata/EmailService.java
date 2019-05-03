@@ -188,8 +188,8 @@ public class EmailService {
 	 */
 	private boolean alreadyExists(final Email email) {
 
-			List<Email> listFound = emailRepository.findByEmailAndActive(
-				email.getEmail(), "S");
+			List<Email> listFound = emailRepository.findByEmail(
+				email.getEmail());
 			for (Email e : listFound) {
 				// ignores the same e-mail entity
 				if (!e.getEmailId().equals(email.getEmailId())) {

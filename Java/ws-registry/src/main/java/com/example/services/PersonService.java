@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -106,26 +105,4 @@ public class PersonService {
 		return personInfo;
 	}
 
-	/**
-	 * Search for a list of people with account and all filters passed.
-	 * 
-	 * @param cpf
-	 * @param name
-	 * @param auth
-	 * @param page
-	 * @param size
-	 * @return
-	 */
-	public Page<Person> findAllWithAccount(String cpf, String name, String auth,
-		Integer page, Integer size) {
-
-		Page<Person> results = null;
-
-		PageRequest pageable = PageRequest.of(page == null ? 0 : page, size == null ? 30 : size,
-			Direction.ASC, "NM_NOME");
-		results = personRepository.findAllWithAccountByCpfAndNameAndAuth(cpf, name, auth,
-				pageable);
-
-		return results;
-	}
 }

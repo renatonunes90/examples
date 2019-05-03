@@ -33,7 +33,7 @@ public interface EmailRepository extends JpaRepository<Email, Long> , CustomEmai
 		nativeQuery = true)
 	List<Email> callFuncGetAllEmails(@Param("ID_PESSOA") Long personId);
 
-	List<Email> findByEmailAndActive(String email, String active);
+	List<Email> findByEmail(String email);
 
 	Page<Email> findAllByEmailContaining(String email, Pageable pageable);
 

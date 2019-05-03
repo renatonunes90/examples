@@ -38,18 +38,4 @@ public interface PersonRepository extends JpaRepository<Person, Long> , CustomPe
 
 	Optional<Person> findByPersonIdAndActive(Long personId, String active);
 
-	@Query(value = "SELECT p.* FROM PERSON p "
-		+ "JOIN PERSON_ACCOUNT cp ON ( p.PERSON_ID = cp.PERSON_ID ) "
-		+ "JOIN ACCOUNT c ON ( cp.ACCOUNT_ID = c.ACCOUNT_ID AND c.ACTIVE = 'S' ) "
-		+ "WHERE p.CPF LIKE '%' || ?1 || '%' AND p.NAME LIKE '%' || ?2 || '%' "
-		+ "AND cp.ACCOUNT_ID IN ( SELECT DISTINCT(a.ACCOUNT_ID) FROM AUTHENTICATION a WHERE a.AUTHENTICATION LIKE '%' || ?3 || '%' ) "
-		+ "AND p.ACTUVE = 'S'", countQuery = "SELECT COUNT(*) FROM PERSON p " 
-		        + "JOIN PERSON_ACCOUNT cp ON ( p.PERSON_ID = cp.PERSON_ID ) " 
-		        + "JOIN ACCOUNT c ON ( cp.ACCOUNT_ID = c.ACCOUNT_ID AND c.ACTIVE = 'S' ) " 
-		        + "WHERE p.CPF LIKE '%' || ?1 || '%' AND p.NAME LIKE '%' || ?2 || '%' " 
-		        + "AND cp.ACCOUNT_ID IN ( SELECT DISTINCT(a.ACCOUNT_ID) FROM AUTHENTICATION a WHERE a.AUTHENTICATION LIKE '%' || ?3 || '%' ) " 
-		        + "AND p.ACTUVE = 'S'", nativeQuery = true)
-	Page<Person> findAllWithAccountByCpfAndNameAndAuth(String cpf, String name, String auth,
-		Pageable pageable);
-
 }
