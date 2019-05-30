@@ -46,8 +46,8 @@ public class ResourceConfig extends ResourceServerConfigurerAdapter {
 		source.registerCorsConfiguration("/**", config);
 
 		http.cors().configurationSource(source).and().authorizeRequests().antMatchers(
-			HttpMethod.OPTIONS, "/**").permitAll().antMatchers(
-				"/login").permitAll().anyRequest().authenticated().and().formLogin().permitAll();
+			HttpMethod.OPTIONS, "/**").permitAll();
+		//.antMatchers("/login").permitAll().anyRequest().authenticated().and().formLogin().permitAll();
 	}
 
 }
