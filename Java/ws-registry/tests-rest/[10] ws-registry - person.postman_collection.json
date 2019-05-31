@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "f4c316ab-e017-44f1-b374-80896fb75e9b",
+		"_postman_id": "809999b7-7764-4ab7-b3f8-5f086c4acc9c",
 		"name": "[10] ws-registry - person",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -38,13 +38,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/ws-siu/registry/?page=1&size=1000",
+							"raw": "{{url}}/ws-registry/person/?page=1&size=1000",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"ws-siu",
-								"registry",
+								"ws-registry",
+								"person",
 								""
 							],
 							"query": [
@@ -224,6 +224,64 @@
 					"response": []
 				},
 				{
+					"name": "findAllByName",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5568bb39-7656-427c-99d4-3e0140356c62",
+								"exec": [
+									"//parse response",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Size greather than 0\", function () {",
+									"    pm.expect(jsonData.content.length).to.gt( 0 );",
+									"});",
+									"",
+									"pm.test(\"Name OK\", function () {",
+									"    let content = jsonData.content;",
+									"    for ( let i= 0; i < content.length; i++ ) {",
+									"        pm.expect(content[i].name).to.include( 'MARY' );",
+									"    }",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/person/?name=Mary&size=500",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"person",
+								""
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Mary"
+								},
+								{
+									"key": "size",
+									"value": "500"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "findAllPaging",
 					"event": [
 						{
@@ -254,7 +312,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/ws-registry/person/",
+							"raw": "{{url}}/ws-registry/person/?page=1&size=10",
 							"host": [
 								"{{url}}"
 							],
@@ -262,6 +320,181 @@
 								"ws-registry",
 								"person",
 								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getEmails",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "5c14f9d6-dffc-455d-b3cb-72c05ca994f9",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "d5936bd2-eb59-4cda-bfce-0693bb66e04a",
+								"exec": [
+									"//parse response",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"PersonId OK\", function () {",
+									"    let content = jsonData.content;",
+									"    for ( let i= 0; i < content.length; i++ ) {",
+									"        pm.expect(content[i].personId + '').to.include( pm.environment.get(\"personId\") );",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/person/{{personId}}/email",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"person",
+								"{{personId}}",
+								"email"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPhones",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5568bb39-7656-427c-99d4-3e0140356c62",
+								"exec": [
+									"//parse response",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Size greather than 0\", function () {",
+									"    pm.expect(jsonData.content.length).to.gt( 0 );",
+									"});",
+									"",
+									"pm.test(\"PersonId OK\", function () {",
+									"    let content = jsonData.content;",
+									"    for ( let i= 0; i < content.length; i++ ) {",
+									"        pm.expect(content[i].personId + '').to.include( pm.environment.get(\"personId\") );",
+									"    }",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/person/{{personId}}/phone",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"person",
+								"{{personId}}",
+								"phone"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPhonesByType",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5568bb39-7656-427c-99d4-3e0140356c62",
+								"exec": [
+									"//parse response",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Size greather than 0\", function () {",
+									"    pm.expect(jsonData.content.length).to.gt( 0 );",
+									"});",
+									"",
+									"pm.test(\"PersonId OK\", function () {",
+									"    let content = jsonData.content;",
+									"    for ( let i= 0; i < content.length; i++ ) {",
+									"        pm.expect(content[i].personId + '').to.include( pm.environment.get(\"personId\") );",
+									"    }",
+									"});",
+									"",
+									"pm.test(\"PhoneTypeId OK\", function () {",
+									"    let content = jsonData.content;",
+									"    for ( let i= 0; i < content.length; i++ ) {",
+									"        pm.expect(content[i].phoneType.phoneTypeId).to.equals( 1 );",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/person/{{personId}}/phone/?phoneTypeId=1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"person",
+								"{{personId}}",
+								"phone",
+								""
+							],
+							"query": [
+								{
+									"key": "phoneTypeId",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -289,6 +522,307 @@
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
 							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "CRUDRequests",
+			"item": [
+				{
+					"name": "create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "735429b5-f0b2-4f53-88d8-3be984c097ec",
+								"exec": [
+									"// test of status",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"New Person created\", function () {",
+									"    pm.expect(jsonData.personId).to.gt(0);",
+									"});",
+									"",
+									"// update test variables",
+									"pm.environment.set( \"personIdToDelete\", jsonData.personId );"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "9ecd8972-2fed-405a-b38b-ef67e328abbe",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"genderType\": \"M\",\n    \"birthDate\": \"1978-02-24\",\n    \"name\": \"NOME DE TESTE\",\n    \"cpf\": \"11111111111\",\n    \"birthCountry\": \"Brasil\",\n    \"birthCity\": \"Porto Alegre\",\n    \"breed\": {\n        \"breedId\": 1\n    },\n    \"maritalStatus\": {\n        \"maritalStatusId\": 1\n    },\n    \"fatherName\": \"NOME DO PAI\",\n    \"motherName\": \"NOME DA MÃE\",\n    \"active\": \"S\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/person/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"person",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createMinimal",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+								"exec": [
+									"// test of status",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"New PersonId created\", function () {",
+									"    pm.expect(jsonData.personId).to.gt(0);",
+									"});",
+									"",
+									"// update test variables",
+									"pm.environment.set( \"personIdToDelete2\", jsonData.personId );"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e7771b92-0300-426f-9615-3d7efb4b8ba0",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"genderType\": \"M\",\n    \"birthDate\": \"1980-02-24\",\n    \"name\": \"NOME DE TESTE 2\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/person/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"person",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+								"exec": [
+									"// test of status",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "ae8cb6b6-f8b9-4c6b-943d-9d3e21f39a02",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"personId\" : {{personIdToDelete}},\n\t\"genderType\": \"M\",\n    \"birthDate\": \"1978-02-24\",\n    \"name\": \"NOME DE TESTE EDITADO\",\n    \"cpf\": \"1111111111\",\n    \"birthCountry\": \"BRASIL\",\n    \"birthCity\": \"PORTO ALEGRE\",\n    \"breed\": {\n        \"breedId\": 2\n    },\n    \"maritalStatus\": {\n        \"maritalStatusId\": 2\n    },\n    \"fatherName\": \"Nome do Pai Editado\",\n    \"motherName\": \"Nome da Mãe Editado\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/person/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"person",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+								"exec": [
+									"// test of status",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"personId\" : {{personIdToDelete}}\n}"
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/person/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"person",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteMinimal",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+								"exec": [
+									"// test of status",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"personId\" : {{personIdToDelete2}}\n}"
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/person/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"person",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6cd80d92-e999-4d89-a5fb-23a5eac16cc4",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "21ccfa4c-dad9-4564-8c84-6757b21ff65e",
+						"type": "text/javascript",
+						"exec": [
+							""
 						]
 					}
 				}
@@ -354,6 +888,449 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "createWithoutGenderType",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+								"exec": [
+									"// test of status",
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Error message confirmed\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"GenderType(gênero) não pode ser nulo.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"birthDate\": \"1978-02-24\",\n    \"name\": \"NOME DE TESTE\",\n    \"cpf\": \"11111111111\",\n    \"birthCountry\": \"Brasil\",\n    \"birthCity\": \"Porto Alegre\",\n    \"breed\": {\n        \"breedId\": 1\n    },\n    \"maritalStatus\": {\n        \"maritalStatusId\": 1\n    },\n    \"fatherName\": \"NOME DO PAI\",\n    \"motherName\": \"NOME DA MÃE\",\n    \"active\": \"S\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/person/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"person",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createWithoutBirthDate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+								"exec": [
+									"// test of status",
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Error message confirmed\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"BirthDate não pode ser nulo.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"genderType\": \"M\",\n    \"name\": \"NOME DE TESTE\",\n    \"cpf\": \"11111111111\",\n    \"birthCountry\": \"Brasil\",\n    \"birthCity\": \"Porto Alegre\",\n    \"breed\": {\n        \"breedId\": 1\n    },\n    \"maritalStatus\": {\n        \"maritalStatusId\": 1\n    },\n    \"fatherName\": \"NOME DO PAI\",\n    \"motherName\": \"NOME DA MÃE\",\n    \"active\": \"S\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/person/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"person",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createWithoutName",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+								"exec": [
+									"// test of status",
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Error message confirmed\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Name não pode ser nulo.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"genderType\": \"M\",\n    \"birthDate\": \"1978-02-24\",\n    \"cpf\": \"11111111111\",\n    \"birthCountry\": \"Brasil\",\n    \"birthCity\": \"Porto Alegre\",\n    \"breed\": {\n        \"breedId\": 1\n    },\n    \"maritalStatus\": {\n        \"maritalStatusId\": 1\n    },\n    \"fatherName\": \"NOME DO PAI\",\n    \"motherName\": \"NOME DA MÃE\",\n    \"active\": \"S\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/person/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"person",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateInvalidId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+								"exec": [
+									"// test of status",
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"personId\" : -1,\n\t\"genderType\": \"M\",\n    \"birthDate\": \"1978-02-24\",\n    \"name\": \"NOME DE TESTE EDITADO\",\n    \"cpf\": \"1111111111\",\n    \"birthCountry\": \"BRASIL\",\n    \"birthCity\": \"PORTO ALEGRE\",\n    \"breed\": {\n        \"breedId\": 2\n    },\n    \"maritalStatus\": {\n        \"maritalStatusId\": 2\n    },\n    \"fatherName\": \"Nome do Pai Editado\",\n    \"motherName\": \"Nome da Mãe Editado\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/person/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"person",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateWithoutPersonId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+								"exec": [
+									"// test of status",
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"genderType\": \"M\",\n    \"birthDate\": \"1978-02-24\",\n    \"name\": \"NOME DE TESTE EDITADO\",\n    \"cpf\": \"1111111111\",\n    \"birthCountry\": \"BRASIL\",\n    \"birthCity\": \"PORTO ALEGRE\",\n    \"breed\": {\n        \"breedId\": 2\n    },\n    \"maritalStatus\": {\n        \"maritalStatusId\": 2\n    },\n    \"fatherName\": \"Nome do Pai Editado\",\n    \"motherName\": \"Nome da Mãe Editado\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/person/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"person",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateWithoutGenderType",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+								"exec": [
+									"// test of status",
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Error message confirmed\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"GenderType(gênero) não pode ser nulo.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"personId\" : {{personIdToDelete}},\n    \"birthDate\": \"1978-02-24\",\n    \"name\": \"NOME DE TESTE EDITADO\",\n    \"cpf\": \"1111111111\",\n    \"birthCountry\": \"BRASIL\",\n    \"birthCity\": \"PORTO ALEGRE\",\n    \"breed\": {\n        \"breedId\": 2\n    },\n    \"maritalStatus\": {\n        \"maritalStatusId\": 2\n    },\n    \"fatherName\": \"Nome do Pai Editado\",\n    \"motherName\": \"Nome da Mãe Editado\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/person/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"person",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateWithoutBirthDate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+								"exec": [
+									"// test of status",
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Error message confirmed\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"BirthDate não pode ser nulo.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"personId\" : {{personIdToDelete}},\n\t\"genderType\": \"M\",\n    \"name\": \"NOME DE TESTE EDITADO\",\n    \"cpf\": \"1111111111\",\n    \"birthCountry\": \"BRASIL\",\n    \"birthCity\": \"PORTO ALEGRE\",\n    \"breed\": {\n        \"breedId\": 2\n    },\n    \"maritalStatus\": {\n        \"maritalStatusId\": 2\n    },\n    \"fatherName\": \"Nome do Pai Editado\",\n    \"motherName\": \"Nome da Mãe Editado\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/person/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"person",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateWithoutName",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+								"exec": [
+									"// test of status",
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Error message confirmed\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Name não pode ser nulo.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"personId\" : {{personIdToDelete}},\n\t\"genderType\": \"M\",\n    \"birthDate\": \"1978-02-24\",\n    \"cpf\": \"1111111111\",\n    \"birthCountry\": \"BRASIL\",\n    \"birthCity\": \"PORTO ALEGRE\",\n    \"breed\": {\n        \"breedId\": 2\n    },\n    \"maritalStatus\": {\n        \"maritalStatusId\": 2\n    },\n    \"fatherName\": \"Nome do Pai Editado\",\n    \"motherName\": \"Nome da Mãe Editado\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/person/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"person",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteInvalid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+								"exec": [
+									"// test of status",
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"personId\" : -1\n}"
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/person/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"person",
+								""
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
@@ -362,7 +1339,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "4098abb0-da24-4f65-877b-d3f7af58ce5b",
+				"id": "f2d8cdb4-119d-4415-9a7d-421aaca929cb",
 				"type": "text/javascript",
 				"exec": [
 					""

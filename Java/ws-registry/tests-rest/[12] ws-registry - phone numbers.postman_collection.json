@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "e0020089-4851-48fc-ac2c-616e44fb8cb7",
-		"name": "[11] ws-registry - emails",
+		"_postman_id": "ed714bbc-82e2-4510-9102-3391963405ee",
+		"name": "[12] ws-registry - phone numbers",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -24,8 +24,8 @@
 									"});",
 									"",
 									"// update test variables",
-									"pm.environment.set( \"emailId\", jsonData.content[0].emailId );",
-									"pm.environment.set( \"email\", jsonData.content[0].email );",
+									"pm.environment.set( \"phoneId\", jsonData.content[0].phoneId );",
+									"pm.environment.set( \"phoneNumber\", jsonData.content[0].number );",
 									"pm.environment.set( \"personId\", jsonData.content[0].personId );"
 								],
 								"type": "text/javascript"
@@ -40,14 +40,14 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/ws-registry/person/email/",
+							"raw": "{{url}}/ws-registry/person/phone/",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"ws-registry",
 								"person",
-								"email",
+								"phone",
 								""
 							]
 						}
@@ -55,67 +55,12 @@
 					"response": []
 				},
 				{
-					"name": "findAllByPersonId",
+					"name": "findAllByPhoneNumber",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "5568bb39-7656-427c-99d4-3e0140356c62",
-								"exec": [
-									"//parse response",
-									"let jsonData = pm.response.json();",
-									"",
-									"pm.test(\"Size greather than 0\", function () {",
-									"    pm.expect(jsonData.content.length).to.gt( 0 );",
-									"});",
-									"",
-									"pm.test(\"PersonId OK\", function () {",
-									"    let content = jsonData.content;",
-									"    for ( let i= 0; i < content.length; i++ ) {",
-									"        pm.expect(content[i].personId + '').to.include( pm.environment.get(\"personId\") );",
-									"    }",
-									"});",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{url}}/ws-registry/person/email/?personId={{personId}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"ws-registry",
-								"person",
-								"email",
-								""
-							],
-							"query": [
-								{
-									"key": "personId",
-									"value": "{{personId}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "findAllByEmail",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "de3c15cf-18c3-4635-b694-ce663036a5cc",
+								"id": "57bfcf25-6e8c-45c0-ab0a-8eb27a34aba4",
 								"exec": [
 									"//parse response",
 									"let jsonData = pm.response.json();",
@@ -124,10 +69,10 @@
 									"    pm.expect(jsonData.content.length).to.gt(0);",
 									"});",
 									"",
-									"pm.test(\"Email OK\", function () {",
+									"pm.test(\"PhoneNumber OK\", function () {",
 									"    let content = jsonData.content;",
 									"    for ( let i= 0; i < content.length; i++ ) {",
-									"        pm.expect(content[i].email).to.include( pm.environment.get(\"email\") );",
+									"        pm.expect(content[i].number).to.include( pm.environment.get(\"phoneNumber\") );",
 									"    }",
 									"});"
 								],
@@ -143,20 +88,20 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/ws-registry/person/email/?email={{email}}",
+							"raw": "{{url}}/ws-registry/person/phone/?phoneNumber={{phoneNumber}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"ws-registry",
 								"person",
-								"email",
+								"phone",
 								""
 							],
 							"query": [
 								{
-									"key": "email",
-									"value": "{{email}}"
+									"key": "phoneNumber",
+									"value": "{{phoneNumber}}"
 								}
 							]
 						}
@@ -194,14 +139,14 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/ws-registry/person/email/?page=1&size=10",
+							"raw": "{{url}}/ws-registry/person/phone/?page=1&size=10",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"ws-registry",
 								"person",
-								"email",
+								"phone",
 								""
 							],
 							"query": [
@@ -212,63 +157,6 @@
 								{
 									"key": "size",
 									"value": "10"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "alreadyExists",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "de3c15cf-18c3-4635-b694-ce663036a5cc",
-								"exec": [
-									"//parse response",
-									"let jsonData = pm.response.json();",
-									"",
-									"pm.test(\"Return expected\", function () {",
-									"    pm.expect(jsonData).to.equals(true);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "48575041-e69d-42a7-a02a-2f983fdeccf6",
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{url}}/ws-registry/person/email/exists?email=",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"ws-registry",
-								"person",
-								"email",
-								"exists"
-							],
-							"query": [
-								{
-									"key": "email",
-									"value": ""
 								}
 							]
 						}
@@ -296,8 +184,8 @@
 									"//parse response",
 									"let jsonData = pm.response.json();",
 									"",
-									"pm.test(\"Email OK\", function () {",
-									"    pm.expect(jsonData.email).to.eq( pm.environment.get( \"email\" ) );",
+									"pm.test(\"PhoneNumber OK\", function () {",
+									"    pm.expect(jsonData.number).to.eq( pm.environment.get( \"phoneNumber\" ) );",
 									"});",
 									"",
 									"pm.test(\"PersonId OK\", function () {",
@@ -316,15 +204,15 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/ws-registry/person/email/{{emailId}}",
+							"raw": "{{url}}/ws-registry/person/phone/{{phoneId}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"ws-registry",
 								"person",
-								"email",
-								"{{emailId}}"
+								"phone",
+								"{{phoneId}}"
 							]
 						}
 					},
@@ -375,12 +263,18 @@
 									"",
 									"let jsonData = pm.response.json();",
 									"",
-									"pm.test(\"New EmailId created\", function () {",
-									"    pm.expect(jsonData.emailId).to.gt(0);",
+									"pm.test(\"New PhoneId created\", function () {",
+									"    pm.expect(jsonData.phoneId).to.gt(0);",
+									"});",
+									"pm.test(\"Number OK\", function () {",
+									"    pm.expect(jsonData.number).to.eq(\"99886565\");",
+									"});",
+									"pm.test(\"PersonId OK\", function () {",
+									"    pm.expect(jsonData.personId).to.eq(pm.environment.get(\"personId\"));",
 									"});",
 									"",
 									"// update test variables",
-									"pm.environment.set( \"emailIdToDelete\", jsonData.emailId );"
+									"pm.environment.set( \"phoneIdToDelete\", jsonData.phoneId );"
 								],
 								"type": "text/javascript"
 							}
@@ -408,17 +302,17 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"email\": \"teste@teeest.com\",\n\t\"emailId\": -1,\n\t\"personId\": 144,\n}"
+							"raw": "{\n\t\"phoneType\": {\n\t\t\"phoneTypeId\": 1\n\t},\n\t\"number\": \"99886565\",\n\t\"ddd\": \"51\",\n\t\"ddi\": \"55\",\n\t\"personId\": {{personId}}\n}"
 						},
 						"url": {
-							"raw": "{{url}}/ws-registry/person/email/",
+							"raw": "{{url}}/ws-registry/person/phone/",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"ws-registry",
 								"person",
-								"email",
+								"phone",
 								""
 							]
 						}
@@ -440,8 +334,16 @@
 									"",
 									"let jsonData = pm.response.json();",
 									"",
-									"pm.test(\"Email udpated\", function () {",
-									"    pm.expect(jsonData.email).to.eq(pm.environment.get( \"randomEmail\" ));",
+									"pm.test(\"Phone Number udpated\", function () {",
+									"    pm.expect(jsonData.number).to.eq(\"99996565\");",
+									"});",
+									"",
+									"pm.test(\"DDIr udpated\", function () {",
+									"    pm.expect(jsonData.ddi).to.eq(\"55\");",
+									"});",
+									"",
+									"pm.test(\"Phone Type udpated\", function () {",
+									"    pm.expect(jsonData.phoneType.phoneTypeId).to.eq(2);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -452,7 +354,7 @@
 							"script": {
 								"id": "ae8cb6b6-f8b9-4c6b-943d-9d3e21f39a02",
 								"exec": [
-									"pm.environment.set( \"randomEmail\", \"test\"  + Math.ceil( Math.random() * 10000 ) + \"@test.com\" );"
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -470,17 +372,17 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"emailId\" : {{emailIdToDelete}},\n\t\"personId\" : {{personId}},\n\t\"email\" : \"{{randomEmail}}\"\n}"
+							"raw": "{\n\t\"phoneId\" : {{phoneIdToDelete}},\n\t\"personId\" : {{personId}},\n\t\"phoneType\": {\n\t\t\"phoneTypeId\": 2\n\t},\n\t\"number\": \"99996565\",\n\t\"ddd\": \"51\"\n}"
 						},
 						"url": {
-							"raw": "{{url}}/ws-registry/person/email/",
+							"raw": "{{url}}/ws-registry/person/phone/",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"ws-registry",
 								"person",
-								"email",
+								"phone",
 								""
 							]
 						}
@@ -516,22 +418,44 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"emailId\" : {{emailIdToDelete}}\n}"
+							"raw": "{\n\t\"phoneId\" : {{phoneIdToDelete}}\n}"
 						},
 						"url": {
-							"raw": "{{url}}/ws-registry/person/email/",
+							"raw": "{{url}}/ws-registry/person/phone/",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"ws-registry",
 								"person",
-								"email",
+								"phone",
 								""
 							]
 						}
 					},
 					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7cdb7c10-9a9a-4a16-bdb9-7cd1035d1d8a",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "4f81680c-b3ec-4823-883d-96fdfc6cb123",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		},
@@ -573,77 +497,15 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/ws-registry/person/email/-1",
+							"raw": "{{url}}/ws-registry/person/phone/-1",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"ws-registry",
 								"person",
-								"email",
+								"phone",
 								"-1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "createAlreadyExists",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
-								"exec": [
-									"// test of status",
-									"pm.test(\"Status code is 400\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});",
-									"",
-									"let jsonData = pm.response.json();",
-									"",
-									"pm.test(\"Error message confirmed\", function () {",
-									"    pm.expect(pm.response.text()).to.include(\"E-mail já existe na base de dados.\");",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "e7771b92-0300-426f-9615-3d7efb4b8ba0",
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"personId\" : {{personId}},\n\t\"email\" : \"\"\n}"
-						},
-						"url": {
-							"raw": "{{url}}/ws-registry/person/email/",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"ws-registry",
-								"person",
-								"email",
-								""
 							]
 						}
 					},
@@ -678,17 +540,17 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"personId\" : -1,\n\t\"email\" : \"teste@test.com\"\n}"
+							"raw": "{\n\t\"phoneType\": {\n\t\t\"phoneTypeId\": 1\n\t},\n\t\"number\": \"99886565\",\n\t\"ddd\": \"51\",\n\t\"personId\" : -1\n}"
 						},
 						"url": {
-							"raw": "{{url}}/ws-registry/person/email/",
+							"raw": "{{url}}/ws-registry/person/phone/",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"ws-registry",
 								"person",
-								"email",
+								"phone",
 								""
 							]
 						}
@@ -730,17 +592,17 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"email\" : \"teste@test.com\"\n}"
+							"raw": "{\n\t\"phoneType\": {\n\t\t\"phoneTypeId\": 1\n\t},\n\t\"number\": \"99886565\",\n\t\"ddd\": \"51\"\n}\n"
 						},
 						"url": {
-							"raw": "{{url}}/ws-registry/person/email/",
+							"raw": "{{url}}/ws-registry/person/phone/",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"ws-registry",
 								"person",
-								"email",
+								"phone",
 								""
 							]
 						}
@@ -748,7 +610,7 @@
 					"response": []
 				},
 				{
-					"name": "createWithoutEmail",
+					"name": "createWithoutNumber",
 					"event": [
 						{
 							"listen": "test",
@@ -763,7 +625,7 @@
 									"let jsonData = pm.response.json();",
 									"",
 									"pm.test(\"Error message confirmed\", function () {",
-									"    pm.expect(pm.response.text()).to.include(\"Email não pode ser nulo.\");",
+									"    pm.expect(pm.response.text()).to.include(\"Número do telefone não pode ser nulo.\");",
 									"});"
 								],
 								"type": "text/javascript"
@@ -782,79 +644,17 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"personId\" : {{personId}}\n}"
+							"raw": "{\n\t\"phoneType\": {\n\t\t\"phoneTypeId\": 1\n\t},\n\t\"ddd\": \"51\",\n\t\"personId\": {{personId}}\n}"
 						},
 						"url": {
-							"raw": "{{url}}/ws-registry/person/email/",
+							"raw": "{{url}}/ws-registry/person/phone/",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"ws-registry",
 								"person",
-								"email",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "updateAlreadyExists",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
-								"exec": [
-									"// test of status",
-									"pm.test(\"Status code is 400\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});",
-									"",
-									"let jsonData = pm.response.json();",
-									"",
-									"pm.test(\"Error message confirmed\", function () {",
-									"    pm.expect(pm.response.text()).to.include(\"E-mail já existe na base de dados.\");",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "ae8cb6b6-f8b9-4c6b-943d-9d3e21f39a02",
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"emailId\" : {{emailIdToDelete}},\n\t\"personId\" : {{personId}},\n\t\"email\" : \"des_alexandre.cirne@edu.pucrs.br\"\n}"
-						},
-						"url": {
-							"raw": "{{url}}/ws-registry/person/email/",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"ws-registry",
-								"person",
-								"email",
+								"phone",
 								""
 							]
 						}
@@ -890,17 +690,17 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"emailId\" : -1,\n\t\"personId\" : {{personId}},\n\t\"email\" : \"testeUpdated@test.com\"\n}"
+							"raw": "{\n\t\"phoneId\" : -1,\n\t\"personId\" : {{personId}},\n\t\"phoneType\": {\n\t\t\"phoneTypeId\": 2\n\t},\n\t\"number\": \"99996565\",\n\t\"ddd\": \"51\",\n\t\"ddi\": \"55\"\n}\n"
 						},
 						"url": {
-							"raw": "{{url}}/ws-registry/person/email/",
+							"raw": "{{url}}/ws-registry/person/phone/",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"ws-registry",
 								"person",
-								"email",
+								"phone",
 								""
 							]
 						}
@@ -936,17 +736,17 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"emailId\" : {{emailIdToDelete}},\n\t\"personId\" : -1,\n\t\"email\" : \"testeUpdated@test.com\"\n}"
+							"raw": "{\n\t\"phoneId\" : {{phoneId}},\n\t\"personId\" : -1,\n\t\"phoneType\": {\n\t\t\"phoneTypeId\": 2\n\t},\n\t\"number\": \"99996565\",\n\t\"ddd\": \"51\",\n\t\"ddi\": \"55\"\n}"
 						},
 						"url": {
-							"raw": "{{url}}/ws-registry/person/email/",
+							"raw": "{{url}}/ws-registry/person/phone/",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"ws-registry",
 								"person",
-								"email",
+								"phone",
 								""
 							]
 						}
@@ -988,17 +788,17 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"emailId\" : {{emailIdToDelete}},\n\t\"email\" : \"testeUpdated@test.com\"\n}"
+							"raw": "{\n\t\"phoneId\" : -1,\n\t\"phoneType\": {\n\t\t\"phoneTypeId\": 2\n\t},\n\t\"number\": \"99996565\",\n\t\"ddd\": \"51\",\n\t\"ddi\": \"55\"\n}"
 						},
 						"url": {
-							"raw": "{{url}}/ws-registry/person/email/",
+							"raw": "{{url}}/ws-registry/person/phone/",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"ws-registry",
 								"person",
-								"email",
+								"phone",
 								""
 							]
 						}
@@ -1006,7 +806,7 @@
 					"response": []
 				},
 				{
-					"name": "updateWithoutEmail",
+					"name": "updateWithoutNumber",
 					"event": [
 						{
 							"listen": "test",
@@ -1021,7 +821,7 @@
 									"let jsonData = pm.response.json();",
 									"",
 									"pm.test(\"Error message confirmed\", function () {",
-									"    pm.expect(pm.response.text()).to.include(\"Email não pode ser nulo.\");",
+									"    pm.expect(pm.response.text()).to.include(\"Número do telefone não pode ser nulo.\");",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1040,17 +840,17 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"emailId\" : {{emailIdToDelete}},\n\t\"personId\" : {{personId}}\n}"
+							"raw": "{\n\t\"phoneId\" : -1,\n\t\"personId\" : {{personId}},\n\t\"phoneType\": {\n\t\t\"phoneTypeId\": 2\n\t},\n\t\"ddd\": \"51\",\n\t\"ddi\": \"55\"\n}"
 						},
 						"url": {
-							"raw": "{{url}}/ws-registry/person/email/",
+							"raw": "{{url}}/ws-registry/person/phone/",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"ws-registry",
 								"person",
-								"email",
+								"phone",
 								""
 							]
 						}
@@ -1086,17 +886,17 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"emailId\" : -1\n}"
+							"raw": "{\n\t\"phoneId\" : -1\n}"
 						},
 						"url": {
-							"raw": "{{url}}/ws-registry/person/email/",
+							"raw": "{{url}}/ws-registry/person/phone/",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"ws-registry",
 								"person",
-								"email",
+								"phone",
 								""
 							]
 						}
@@ -1110,7 +910,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "4b7b3e49-f295-47ba-ad3c-5ed7046b03f4",
+				"id": "58b4bb74-96d4-4b28-9e26-36e33b16e28a",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1120,7 +920,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "256eca7c-feff-4d54-bcec-301eeeeb09ac",
+				"id": "22f68cd9-69be-45b2-811a-833f442315ca",
 				"type": "text/javascript",
 				"exec": [
 					"// simple tests of speed",

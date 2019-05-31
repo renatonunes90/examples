@@ -1,0 +1,2028 @@
+{
+	"info": {
+		"_postman_id": "72fd6e88-d450-4e8d-9491-af4976bf7aee",
+		"name": "[20] ws-registry - domain",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Breed",
+			"item": [
+				{
+					"name": "SuccessRequests",
+					"item": [
+						{
+							"name": "findAll",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "57bfcf25-6e8c-45c0-ab0a-8eb27a34aba4",
+										"exec": [
+											"//parse response",
+											"let jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Size bigger than 0\", function () {",
+											"    pm.expect(jsonData.length).to.gt(0);",
+											"});",
+											"",
+											"// update test variables",
+											"pm.environment.set( \"breedId\", jsonData[0].breedId );"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}/ws-registry/domain/breed/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ws-registry",
+										"domain",
+										"breed",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "findOne",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "5c14f9d6-dffc-455d-b3cb-72c05ca994f9",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "d5936bd2-eb59-4cda-bfce-0693bb66e04a",
+										"exec": [
+											"//parse response",
+											"let jsonData = pm.response.json();",
+											"",
+											"pm.test(\"BreedId OK\", function () {",
+											"    pm.expect(jsonData.breedId).to.eq( pm.environment.get( \"breedId\" ) );",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}/ws-registry/domain/breed/{{breedId}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ws-registry",
+										"domain",
+										"breed",
+										"{{breedId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "8dc6b244-562b-4e5a-9eb4-1ff0cb80b02d",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "314b5df2-c02f-4e86-a2c7-63bb8c9185ed",
+								"type": "text/javascript",
+								"exec": [
+									"// test of status",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "CRUDRequests",
+					"item": [
+						{
+							"name": "create",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+										"exec": [
+											"// test of status",
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"let jsonData = pm.response.json();",
+											"",
+											"pm.test(\"New Breed created\", function () {",
+											"    pm.expect(jsonData.breedId).to.gt(0);",
+											"});",
+											"",
+											"// update test variables",
+											"pm.environment.set( \"breedIdToDelete\", jsonData.breedId );"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "e7771b92-0300-426f-9615-3d7efb4b8ba0",
+										"exec": [
+											"pm.environment.set( \"randomBreed\", \"test\"  + Math.ceil( Math.random() * 10000 ) );"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"breedText\" : \"{{randomBreed}}\"\n}"
+								},
+								"url": {
+									"raw": "{{url}}/ws-registry/domain/breed/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ws-registry",
+										"domain",
+										"breed",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+										"exec": [
+											"// test of status",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"let jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Breed udpated\", function () {",
+											"    pm.expect(jsonData.breedText).to.eq(pm.environment.get( \"randomBreed\" ));",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "ae8cb6b6-f8b9-4c6b-943d-9d3e21f39a02",
+										"exec": [
+											"pm.environment.set( \"randomBreed\", \"test\"  + Math.ceil( Math.random() * 10000 ) );"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"breedId\" : {{breedIdToDelete}},\n\t\"breedText\" : \"{{randomBreed}}\"\n}"
+								},
+								"url": {
+									"raw": "{{url}}/ws-registry/domain/breed",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ws-registry",
+										"domain",
+										"breed"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+										"exec": [
+											"// test of status",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"breedId\" : {{breedIdToDelete}}\n}"
+								},
+								"url": {
+									"raw": "{{url}}/ws-registry/domain/breed/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ws-registry",
+										"domain",
+										"breed",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "ErrorRequests",
+					"item": [
+						{
+							"name": "findOneInvalid",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+										"exec": [
+											"// test of status",
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "c81d131a-8324-4951-b611-79a559972b7b",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}/ws-registry/domain/breed/-1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ws-registry",
+										"domain",
+										"breed",
+										"-1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createAlreadyExists",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+										"exec": [
+											"// test of status",
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"let jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Error message confirmed\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"Raça já existe na base de dados.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "e7771b92-0300-426f-9615-3d7efb4b8ba0",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"breedText\" : \"AMARELA\"\n}"
+								},
+								"url": {
+									"raw": "{{url}}/ws-registry/domain/breed",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ws-registry",
+										"domain",
+										"breed"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createWithoutText",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+										"exec": [
+											"// test of status",
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"let jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Error message confirmed\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"BreedText não pode ser nulo.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\n}"
+								},
+								"url": {
+									"raw": "{{url}}/ws-registry/domain/breed/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ws-registry",
+										"domain",
+										"breed",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateAlreadyExists",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+										"exec": [
+											"// test of status",
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"let jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Error message confirmed\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"Raça já existe na base de dados.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "ae8cb6b6-f8b9-4c6b-943d-9d3e21f39a02",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"breedId\" : {{breedId}},\n\t\"breedText\" : \"PRETA\"\n}"
+								},
+								"url": {
+									"raw": "{{url}}/ws-registry/domain/breed/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ws-registry",
+										"domain",
+										"breed",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateWithoutText",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+										"exec": [
+											"// test of status",
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"let jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Error message confirmed\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"BreedText não pode ser nulo.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"breedId\" : {{breedId}}\n}"
+								},
+								"url": {
+									"raw": "{{url}}/ws-registry/domain/breed",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ws-registry",
+										"domain",
+										"breed"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteInvalid",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+										"exec": [
+											"// test of status",
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"breedId\" : -1\n}"
+								},
+								"url": {
+									"raw": "{{url}}/ws-registry/domain/breed/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ws-registry",
+										"domain",
+										"breed",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "b61bcf2c-a1a2-4dfd-95ae-5998e07a235e",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b2164aa6-230a-49c4-81de-a511a1f9a7b9",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "MaritalStatus",
+			"item": [
+				{
+					"name": "SuccessRequests",
+					"item": [
+						{
+							"name": "findAll",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "57bfcf25-6e8c-45c0-ab0a-8eb27a34aba4",
+										"exec": [
+											"//parse response",
+											"let jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Size bigger than 0\", function () {",
+											"    pm.expect(jsonData.length).to.gt(0);",
+											"});",
+											"",
+											"// update test variables",
+											"pm.environment.set( \"maritalStatusId\", jsonData[0].maritalStatusId );"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}/ws-registry/domain/maritalstatus/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ws-registry",
+										"domain",
+										"maritalstatus",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "findOne",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "5c14f9d6-dffc-455d-b3cb-72c05ca994f9",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "d5936bd2-eb59-4cda-bfce-0693bb66e04a",
+										"exec": [
+											"//parse response",
+											"let jsonData = pm.response.json();",
+											"",
+											"pm.test(\"MaritalStatusId OK\", function () {",
+											"    pm.expect(jsonData.maritalStatusId).to.eq( pm.environment.get( \"maritalStatusId\" ) );",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}/ws-registry/domain/maritalstatus/{{maritalStatusId}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ws-registry",
+										"domain",
+										"maritalstatus",
+										"{{maritalStatusId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "8dc6b244-562b-4e5a-9eb4-1ff0cb80b02d",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "314b5df2-c02f-4e86-a2c7-63bb8c9185ed",
+								"type": "text/javascript",
+								"exec": [
+									"// test of status",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "CRUDRequests",
+					"item": [
+						{
+							"name": "create",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+										"exec": [
+											"// test of status",
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"let jsonData = pm.response.json();",
+											"",
+											"pm.test(\"New MaritalStatus created\", function () {",
+											"    pm.expect(jsonData.maritalStatusId).to.gt(0);",
+											"});",
+											"",
+											"// update test variables",
+											"pm.environment.set( \"maritalStatusIdToDelete\", jsonData.maritalStatusId );"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "e7771b92-0300-426f-9615-3d7efb4b8ba0",
+										"exec": [
+											"pm.environment.set( \"randomMaritalStatus\", \"test\"  + Math.ceil( Math.random() * 10000 ) );"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"maritalStatusText\" : \"{{randomMaritalStatus}}\"\n}"
+								},
+								"url": {
+									"raw": "{{url}}/ws-registry/domain/maritalstatus/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ws-registry",
+										"domain",
+										"maritalstatus",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+										"exec": [
+											"// test of status",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"let jsonData = pm.response.json();",
+											"",
+											"pm.test(\"MaritalStatus udpated\", function () {",
+											"    pm.expect(jsonData.maritalStatusText).to.eq(pm.environment.get( \"randomMaritalStatus\" ));",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "ae8cb6b6-f8b9-4c6b-943d-9d3e21f39a02",
+										"exec": [
+											"pm.environment.set( \"randomMaritalStatus\", \"test\"  + Math.ceil( Math.random() * 10000 ) );"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"maritalStatusId\" : {{maritalStatusIdToDelete}},\n\t\"maritalStatusText\" : \"{{randomMaritalStatus}}\"\n}"
+								},
+								"url": {
+									"raw": "{{url}}/ws-registry/domain/maritalstatus",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ws-registry",
+										"domain",
+										"maritalstatus"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+										"exec": [
+											"// test of status",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"maritalStatusId\" : {{maritalStatusIdToDelete}}\n}"
+								},
+								"url": {
+									"raw": "{{url}}/ws-registry/domain/maritalstatus/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ws-registry",
+										"domain",
+										"maritalstatus",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "ErrorRequests",
+					"item": [
+						{
+							"name": "findOneInvalid",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+										"exec": [
+											"// test of status",
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "c81d131a-8324-4951-b611-79a559972b7b",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}/ws-registry/domain/maritalstatus/-1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ws-registry",
+										"domain",
+										"maritalstatus",
+										"-1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createAlreadyExists",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+										"exec": [
+											"// test of status",
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"let jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Error message confirmed\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"Estado Civil já existe na base de dados.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "e7771b92-0300-426f-9615-3d7efb4b8ba0",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"maritalStatusText\" : \"CASADO\"\n}"
+								},
+								"url": {
+									"raw": "{{url}}/ws-registry/domain/maritalstatus",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ws-registry",
+										"domain",
+										"maritalstatus"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createWithoutText",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+										"exec": [
+											"// test of status",
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"let jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Error message confirmed\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"MaritalStatusText não pode ser nulo.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n}"
+								},
+								"url": {
+									"raw": "{{url}}/ws-registry/domain/maritalstatus/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ws-registry",
+										"domain",
+										"maritalstatus",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateAlreadyExists",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+										"exec": [
+											"// test of status",
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"let jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Error message confirmed\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"Estado Civil já existe na base de dados.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "ae8cb6b6-f8b9-4c6b-943d-9d3e21f39a02",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"maritalStatusId\" : {{maritalStatusId}},\n\t\"maritalStatusText\" : \"SOLTEIRO\"\n}"
+								},
+								"url": {
+									"raw": "{{url}}/ws-registry/domain/maritalstatus/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ws-registry",
+										"domain",
+										"maritalstatus",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateWithoutText",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+										"exec": [
+											"// test of status",
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"let jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Error message confirmed\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"MaritalStatusText não pode ser nulo.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"maritalStatusId\" : {{maritalStatusId}}\n}"
+								},
+								"url": {
+									"raw": "{{url}}/ws-registry/domain/maritalstatus",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ws-registry",
+										"domain",
+										"maritalstatus"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteInvalid",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+										"exec": [
+											"// test of status",
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"maritalStatusId\" : -1\n}"
+								},
+								"url": {
+									"raw": "{{url}}/ws-registry/domain/maritalstatus/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ws-registry",
+										"domain",
+										"maritalstatus",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "PhoneType",
+			"item": [
+				{
+					"name": "SuccessRequests",
+					"item": [
+						{
+							"name": "findAll",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "57bfcf25-6e8c-45c0-ab0a-8eb27a34aba4",
+										"exec": [
+											"//parse response",
+											"let jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Size bigger than 0\", function () {",
+											"    pm.expect(jsonData.length).to.gt(0);",
+											"});",
+											"",
+											"// update test variables",
+											"pm.environment.set( \"phoneTypeId\", jsonData[0].phoneTypeId );"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}/ws-registry/domain/phonetype/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ws-registry",
+										"domain",
+										"phonetype",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "findOne",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "5c14f9d6-dffc-455d-b3cb-72c05ca994f9",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "d5936bd2-eb59-4cda-bfce-0693bb66e04a",
+										"exec": [
+											"//parse response",
+											"let jsonData = pm.response.json();",
+											"",
+											"pm.test(\"PhoneTypeId OK\", function () {",
+											"    pm.expect(jsonData.phoneTypeId).to.eq( pm.environment.get( \"phoneTypeId\" ) );",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}/ws-registry/domain/phonetype/{{phoneTypeId}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ws-registry",
+										"domain",
+										"phonetype",
+										"{{phoneTypeId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "8dc6b244-562b-4e5a-9eb4-1ff0cb80b02d",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "314b5df2-c02f-4e86-a2c7-63bb8c9185ed",
+								"type": "text/javascript",
+								"exec": [
+									"// test of status",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "CRUDRequests",
+					"item": [
+						{
+							"name": "create",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+										"exec": [
+											"// test of status",
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"let jsonData = pm.response.json();",
+											"",
+											"pm.test(\"New PhoneType created\", function () {",
+											"    pm.expect(jsonData.phoneTypeId).to.gt(0);",
+											"});",
+											"",
+											"// update test variables",
+											"pm.environment.set( \"phoneTypeIdToDelete\", jsonData.phoneTypeId );"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "e7771b92-0300-426f-9615-3d7efb4b8ba0",
+										"exec": [
+											"pm.environment.set( \"randomPhoneType\", \"test\"  + Math.ceil( Math.random() * 10000 ) );"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"phoneTypeText\" : \"{{randomPhoneType}}\"\n}"
+								},
+								"url": {
+									"raw": "{{url}}/ws-registry/domain/phonetype/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ws-registry",
+										"domain",
+										"phonetype",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+										"exec": [
+											"// test of status",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"let jsonData = pm.response.json();",
+											"",
+											"pm.test(\"PhoneType udpated\", function () {",
+											"    pm.expect(jsonData.phoneTypeText).to.eq(pm.environment.get( \"randomPhoneType\" ));",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "ae8cb6b6-f8b9-4c6b-943d-9d3e21f39a02",
+										"exec": [
+											"pm.environment.set( \"randomPhoneType\", \"test\"  + Math.ceil( Math.random() * 10000 ) );"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"phoneTypeId\" : {{phoneTypeIdToDelete}},\n\t\"phoneTypeText\" : \"{{randomPhoneType}}\"\n}"
+								},
+								"url": {
+									"raw": "{{url}}/ws-registry/domain/phonetype",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ws-registry",
+										"domain",
+										"phonetype"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+										"exec": [
+											"// test of status",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"phoneTypeId\" : {{phoneTypeIdToDelete}}\n}"
+								},
+								"url": {
+									"raw": "{{url}}/ws-registry/domain/phonetype/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ws-registry",
+										"domain",
+										"phonetype",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "ErrorRequests",
+					"item": [
+						{
+							"name": "findOneInvalid",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+										"exec": [
+											"// test of status",
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "c81d131a-8324-4951-b611-79a559972b7b",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}/ws-registry/domain/phonetype/-1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ws-registry",
+										"domain",
+										"phonetype",
+										"-1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createAlreadyExists",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+										"exec": [
+											"// test of status",
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"let jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Error message confirmed\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"Tipo de telefone já existe na base de dados.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "e7771b92-0300-426f-9615-3d7efb4b8ba0",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"phoneTypeText\" : \"Outros\"\n}"
+								},
+								"url": {
+									"raw": "{{url}}/ws-registry/domain/phonetype/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ws-registry",
+										"domain",
+										"phonetype",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createWithoutText",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+										"exec": [
+											"// test of status",
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"let jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Error message confirmed\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"PhoneTypeText não pode ser nulo.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n}"
+								},
+								"url": {
+									"raw": "{{url}}/ws-registry/domain/phonetype/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ws-registry",
+										"domain",
+										"phonetype",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateAlreadyExists",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+										"exec": [
+											"// test of status",
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"let jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Error message confirmed\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"Tipo de telefone já existe na base de dados.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "ae8cb6b6-f8b9-4c6b-943d-9d3e21f39a02",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"phoneTypeId\" : {{phoneTypeId}},\n\t\"phoneTypeText\" : \"Outros\"\n}"
+								},
+								"url": {
+									"raw": "{{url}}/ws-registry/domain/phonetype/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ws-registry",
+										"domain",
+										"phonetype",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateWithoutText",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+										"exec": [
+											"// test of status",
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"let jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Error message confirmed\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"PhoneTypeText não pode ser nulo.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"phoneTypeId\" : {{phoneTypeId}}\n}"
+								},
+								"url": {
+									"raw": "{{url}}/ws-registry/domain/phonetype",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ws-registry",
+										"domain",
+										"phonetype"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteInvalid",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+										"exec": [
+											"// test of status",
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"phoneTypeId\" : -1\n}"
+								},
+								"url": {
+									"raw": "{{url}}/ws-registry/domain/phonetype/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ws-registry",
+										"domain",
+										"phonetype",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "37ca60f6-369a-4bb3-ae37-4c177b7c5e05",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "24695066-c76b-4e08-bfeb-eea8343c3cfa",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "293bb24b-b632-4ff1-88d7-eba180c972de",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "3f91edad-4cdb-4036-a59e-fc9c8dbbde4d",
+				"type": "text/javascript",
+				"exec": [
+					"// simple tests of speed",
+					"pm.test(\"Response time is less than 400ms\", function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(400);",
+					"});",
+					""
+				]
+			}
+		}
+	]
+}
