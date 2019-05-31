@@ -35,22 +35,22 @@ public class AppLogService {
      * @return
      */
     public Optional<ApplicationLog> insertMsg(final String message, final String username) {
-	log.debug("Starting insert application log message operation");
-
-	Optional<ApplicationLog> logMessage = Optional.empty();
-	if (message != null && !message.isEmpty()) {
-
-	    ApplicationLog appLog = new ApplicationLog();
-	    appLog.setDate(new Date());
-	    appLog.setMessage(message);
-	    appLog.setUsername(username);
-
-	    logMessage = Optional.ofNullable(appLogRepository.save(appLog));
-	    if (logMessage.isPresent()) {
-		log.debug("Log message saved successfully.");
-	    }
-	}
-	return logMessage;
+   	log.debug("Starting insert application log message operation");
+   
+   	Optional<ApplicationLog> logMessage = Optional.empty();
+   	if (message != null && !message.isEmpty()) {
+   
+   	    ApplicationLog appLog = new ApplicationLog();
+   	    appLog.setDate(new Date());
+   	    appLog.setMessage(message);
+   	    appLog.setUsername(username);
+   
+   	    logMessage = Optional.ofNullable(appLogRepository.save(appLog));
+   	    if (logMessage.isPresent()) {
+   		log.debug("Log message saved successfully.");
+   	    }
+   	}
+   	return logMessage;
     }
 
 }

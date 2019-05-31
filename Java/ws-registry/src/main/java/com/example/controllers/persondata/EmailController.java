@@ -84,14 +84,11 @@ public class EmailController {
 	public ResponseEntity<?> getAll(@ApiParam(
 		value = "${ws.swagger.endpoint.person.email.param.email.description}") @RequestParam(
 			value = "email", required = false) final String email, @ApiParam(
-				value = "${ws.swagger.endpoint.generics.param.personId.description}") @RequestParam(
-					value = "personId", required = false) final Long personId,
-		@ApiParam(value = "${ws.swagger.endpoint.generics.param.page.description}") @RequestParam(
-			value = "page", required = false) Integer page, @ApiParam(
-				value = "${ws.swagger.endpoint.generics.param.size.description}") @RequestParam(
-					value = "size", required = false) Integer size) {
-		final Page<Email> result = emailService.findAll(personId, email, page,
-			size);
+				value = "${ws.swagger.endpoint.generics.param.page.description}") @RequestParam(
+					value = "page", required = false) Integer page, @ApiParam(
+						value = "${ws.swagger.endpoint.generics.param.size.description}") @RequestParam(
+							value = "size", required = false) Integer size) {
+		final Page<Email> result = emailService.findAll(null, email, page, size);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
@@ -124,5 +121,4 @@ public class EmailController {
 
 		return new ResponseEntity<>(updatedEmail.get(), HttpStatus.OK);
 	}
-
 }

@@ -35,7 +35,13 @@ public interface PersonRepository extends JpaRepository<Person, Long> , CustomPe
 		@Param("ST_ATIVO") String active);
 
 	Page<Person> findAllByCpfAndActive(String cpf, String active, Pageable pageable);
+	
+	Page<Person> findAllByNameContainingAndActive(String name, String active, Pageable pageable);
+	
+	Page<Person> findAllByActive(String active, Pageable pageable);
 
 	Optional<Person> findByPersonIdAndActive(Long personId, String active);
+	
+	
 
 }

@@ -63,14 +63,10 @@ public class CustomEmailRepositoryImpl implements CustomEmailRepository {
 			int i = 1;
 			ProcedureCall call = session.createStoredProcedureCall("PRD_DELETE_EMAIL");
 			call.registerParameter(i++, Long.class, ParameterMode.IN);
-			call.registerParameter(i++, Long.class, ParameterMode.IN);
-			call.registerParameter(i++, String.class, ParameterMode.IN);
 			call.registerParameter(i++, Integer.class, ParameterMode.OUT);
 
 			i = 1;
 			call.setParameter(i++, email.getEmailId());
-			call.setParameter(i++, email.getPersonId());
-			call.setParameter(i++, email.getEmail());
 
 			call.execute();
 

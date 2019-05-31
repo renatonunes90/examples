@@ -45,7 +45,8 @@ public class EmailService {
 	private PersonRepository personRepository;
 
 	/**
-	 * Verifies if the e-mail received already exists
+	 * Verifies if the e-mail received already exists in
+	 * database.
 	 * 
 	 * @param email
 	 * @return
@@ -72,7 +73,7 @@ public class EmailService {
 	}
 
 	/**
-	 * Create a new email in database.
+	 * Creates a new email in database.
 	 * 
 	 * @param emailToCreate
 	 * @return
@@ -95,7 +96,7 @@ public class EmailService {
 	}
 
 	/**
-	 * Delete an email in database.
+	 * Deletes an email in database.
 	 * 
 	 * @param emailToRemove
 	 * @return
@@ -122,11 +123,12 @@ public class EmailService {
 	 * @return
 	 */
 	public Optional<Email> findOne(final Long id) {
-		return emailRepository.findById(id);
+		return emailRepository.findById( id );
 	}
 
 	/**
-	 * Search for a list of emails with filters.
+	 * Search for a list of emails with filters. Return depends of parameters, searching in follow order: personId, or email,
+	 * or all emails paginated without filter.
 	 * 
 	 * @param personId
 	 * @param email
@@ -181,22 +183,21 @@ public class EmailService {
 	}
 
 	/**
-	 * Verifies if the e-mail exists in another person with reliability level 1 or 2.
+	 * Verifies if the e-mail exists in another person.
 	 * 
 	 * @param email
 	 * @return
 	 */
 	private boolean alreadyExists(final Email email) {
 
-			List<Email> listFound = emailRepository.findByEmail(
-				email.getEmail());
-			for (Email e : listFound) {
-				// ignores the same e-mail entity
-				if (!e.getEmailId().equals(email.getEmailId())) {
-					throw new ErrorMessageGenericException(properties.getMessage(
-					         "msg.error.email.alreadyExists"));
-				}
+		List<Email> listFound = emailRepository.findByEmail(email.getEmail());
+		for (Email e : listFound) {
+			// ignores the same e-mail entity
+			if (!e.getEmailId().equals(email.getEmailId())) {
+				throw new ErrorMessageGenericException(properties.getMessage(
+				         "msg.error.email.alreadyExists"));
 			}
+		}
 
 		return false;
 	}
@@ -219,7 +220,7 @@ public class EmailService {
 			}
 
 			if (!msg.isEmpty()) {
-				appLogService.insertMsg(msg, "someone");
+				appLogService.insertMsg(msg, "");
 			}
 		}
 
@@ -229,29 +230,19 @@ public class EmailService {
 
 		StringBuilder msg = new StringBuilder("");
 
-		if (validateNotNull(email)) {
-			if (email.getEmailId() == null) {
-				msg.append(properties.getMessage("msg.error.email.emailId"));
-			}
+		if (email.getEmailId() == null) {
+			msg.append(properties.getMessage("msg.error.email.emailId"));
+		}
 
-			if (msg.length() > 0) {
-				throw new ErrorMessageGenericException(msg.toString());
-			}
+		if (msg.length() > 0) {
+			throw new ErrorMessageGenericException(msg.toString());
 		}
 
 		return true;
 	}
 
 	private boolean isValidToInsert(final Email email) {
-
-		StringBuilder msg = new StringBuilder("");
-
-		if (validateNotNull(email) && !alreadyExists(email)) {
-			if (msg.length() > 0) {
-				throw new ErrorMessageGenericException(msg.toString());
-			}
-		}
-		return true;
+		return validateNotNull(email) && !alreadyExists(email);
 	}
 
 	private boolean isValidToUpdate(final Email email) {
@@ -262,6 +253,7 @@ public class EmailService {
 			if (email.getEmailId() == null) {
 				msg.append(properties.getMessage("msg.error.email.emailId"));
 			}
+
 			if (msg.length() > 0) {
 				throw new ErrorMessageGenericException(msg.toString());
 			}

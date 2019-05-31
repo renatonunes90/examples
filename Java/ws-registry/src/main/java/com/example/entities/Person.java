@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.common.beans.BaseBean;
+import com.example.entities.domain.Breed;
 import com.example.entities.domain.MaritalStatus;
 
 import lombok.Getter;
@@ -56,6 +57,11 @@ public class Person extends BaseBean implements Serializable {
    @Column(name = "BIRTH_COUNTRY")
 	private String birthCountry;
 
+   @Autowired
+   @OneToOne
+   @JoinColumn(name = "BREED_ID")
+   private Breed breed;
+   
 	@Autowired
 	@OneToOne
 	@JoinColumn(name = "MARITAL_STATUS_ID")

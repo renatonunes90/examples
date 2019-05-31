@@ -32,18 +32,22 @@ public class MaritalStatusService extends AbstractDomainService< MaritalStatus >
    }
 
    @Override
-   protected boolean isValidToDelete( MaritalStatus MaritalStatus )
+   protected boolean isValidToDelete( MaritalStatus maritalStatus )
    {
       StringBuilder msg = new StringBuilder( "" );
 
-      if ( MaritalStatus.getMaritalStatusId() == null )
-      {
-         msg.append( getProperties().getMessage( "msg.error.domain.maritalStatus.maritalStatusId" ) );
-      }
-
-      if ( msg.length() > 0 )
-      {
-         throw new ErrorMessageGenericException( msg.toString() );
+      if ( maritalStatus != null ) {
+         if ( maritalStatus.getMaritalStatusId() == null )
+         {
+            msg.append( getProperties().getMessage( "msg.error.domain.maritalStatus.maritalStatusId" ) );
+         }
+   
+         if ( msg.length() > 0 )
+         {
+            throw new ErrorMessageGenericException( msg.toString() );
+         }
+      } else {
+         throw new ErrorMessageGenericException(getProperties().getMessage("msg.error.domain.maritalStatus.empty"));
       }
 
       return true;
@@ -54,7 +58,7 @@ public class MaritalStatusService extends AbstractDomainService< MaritalStatus >
    {
       StringBuilder msg = new StringBuilder( "" );
 
-      if ( !alreadyExists( maritalStatus ) )
+      if ( maritalStatus != null && !alreadyExists( maritalStatus ) )
       {
          if ( maritalStatus.getMaritalStatusText() == null )
          {
@@ -65,6 +69,8 @@ public class MaritalStatusService extends AbstractDomainService< MaritalStatus >
          {
             throw new ErrorMessageGenericException( msg.toString() );
          }
+      } else {
+         throw new ErrorMessageGenericException(getProperties().getMessage("msg.error.domain.maritalStatus.empty"));
       }
       return true;
    }
@@ -74,7 +80,7 @@ public class MaritalStatusService extends AbstractDomainService< MaritalStatus >
    {
       StringBuilder msg = new StringBuilder( "" );
 
-      if ( !alreadyExists( maritalStatus ) )
+      if ( maritalStatus != null && !alreadyExists( maritalStatus ) )
       {
          if ( maritalStatus.getMaritalStatusId() == null )
          {
@@ -89,6 +95,8 @@ public class MaritalStatusService extends AbstractDomainService< MaritalStatus >
          {
             throw new ErrorMessageGenericException( msg.toString() );
          }
+      } else {
+         throw new ErrorMessageGenericException(getProperties().getMessage("msg.error.domain.maritalStatus.empty"));
       }
 
       return true;
