@@ -1,0 +1,1115 @@
+{
+	"info": {
+		"_postman_id": "e0020089-4851-48fc-ac2c-616e44fb8cb7",
+		"name": "[11] ws-registry - emails",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "SuccessRequests",
+			"item": [
+				{
+					"name": "findAll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "57bfcf25-6e8c-45c0-ab0a-8eb27a34aba4",
+								"exec": [
+									"//parse response",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Size bigger than 0\", function () {",
+									"    pm.expect(jsonData.content.length).to.gt(0);",
+									"});",
+									"",
+									"// update test variables",
+									"pm.environment.set( \"emailId\", jsonData.content[0].emailId );",
+									"pm.environment.set( \"email\", jsonData.content[0].email );",
+									"pm.environment.set( \"personId\", jsonData.content[0].personId );"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/email/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"email",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAllByPersonId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5568bb39-7656-427c-99d4-3e0140356c62",
+								"exec": [
+									"//parse response",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Size greather than 0\", function () {",
+									"    pm.expect(jsonData.content.length).to.gt( 0 );",
+									"});",
+									"",
+									"pm.test(\"PersonId OK\", function () {",
+									"    let content = jsonData.content;",
+									"    for ( let i= 0; i < content.length; i++ ) {",
+									"        pm.expect(content[i].personId + '').to.include( pm.environment.get(\"personId\") );",
+									"    }",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/email/?personId={{personId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"email",
+								""
+							],
+							"query": [
+								{
+									"key": "personId",
+									"value": "{{personId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAllByEmail",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "de3c15cf-18c3-4635-b694-ce663036a5cc",
+								"exec": [
+									"//parse response",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Size bigger than 0\", function () {",
+									"    pm.expect(jsonData.content.length).to.gt(0);",
+									"});",
+									"",
+									"pm.test(\"Email OK\", function () {",
+									"    let content = jsonData.content;",
+									"    for ( let i= 0; i < content.length; i++ ) {",
+									"        pm.expect(content[i].email).to.include( pm.environment.get(\"email\") );",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/email/?email={{email}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"email",
+								""
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "{{email}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAllPaging",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "de773c4c-acc7-4cb4-9586-efa1f0c928c6",
+								"exec": [
+									"//parse response",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Size bigger than 0\", function () {",
+									"    pm.expect(jsonData.content.length).to.gt(0);",
+									"});",
+									"",
+									"pm.test(\"Size equals to 10\", function () {",
+									"    pm.expect(jsonData.content.length).to.eq(10);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/email/?page=1&size=10",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"email",
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "alreadyExists",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "de3c15cf-18c3-4635-b694-ce663036a5cc",
+								"exec": [
+									"//parse response",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Return expected\", function () {",
+									"    pm.expect(jsonData).to.equals(true);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "48575041-e69d-42a7-a02a-2f983fdeccf6",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/email/exists?email=",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"email",
+								"exists"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findOne",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "5c14f9d6-dffc-455d-b3cb-72c05ca994f9",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "d5936bd2-eb59-4cda-bfce-0693bb66e04a",
+								"exec": [
+									"//parse response",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Email OK\", function () {",
+									"    pm.expect(jsonData.email).to.eq( pm.environment.get( \"email\" ) );",
+									"});",
+									"",
+									"pm.test(\"PersonId OK\", function () {",
+									"    pm.expect(jsonData.personId).to.eq( pm.environment.get( \"personId\" ) );",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/email/{{emailId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"email",
+								"{{emailId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "8dc6b244-562b-4e5a-9eb4-1ff0cb80b02d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "314b5df2-c02f-4e86-a2c7-63bb8c9185ed",
+						"type": "text/javascript",
+						"exec": [
+							"// test of status",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "CRUDRequests",
+			"item": [
+				{
+					"name": "create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+								"exec": [
+									"// test of status",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"New EmailId created\", function () {",
+									"    pm.expect(jsonData.emailId).to.gt(0);",
+									"});",
+									"",
+									"// update test variables",
+									"pm.environment.set( \"emailIdToDelete\", jsonData.emailId );"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e7771b92-0300-426f-9615-3d7efb4b8ba0",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"teste@teeest.com\",\n\t\"emailId\": -1,\n\t\"personId\": 144,\n}"
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/email/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"email",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+								"exec": [
+									"// test of status",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Email udpated\", function () {",
+									"    pm.expect(jsonData.email).to.eq(pm.environment.get( \"randomEmail\" ));",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "ae8cb6b6-f8b9-4c6b-943d-9d3e21f39a02",
+								"exec": [
+									"pm.environment.set( \"randomEmail\", \"test\"  + Math.ceil( Math.random() * 10000 ) + \"@test.com\" );"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"emailId\" : {{emailIdToDelete}},\n\t\"personId\" : {{personId}},\n\t\"email\" : \"{{randomEmail}}\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/email/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"email",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+								"exec": [
+									"// test of status",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"emailId\" : {{emailIdToDelete}}\n}"
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/email/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"email",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ErrorRequests",
+			"item": [
+				{
+					"name": "findOneInvalid",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "5c14f9d6-dffc-455d-b3cb-72c05ca994f9",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "d5936bd2-eb59-4cda-bfce-0693bb66e04a",
+								"exec": [
+									"// test of status",
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/email/-1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"email",
+								"-1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createAlreadyExists",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+								"exec": [
+									"// test of status",
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Error message confirmed\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"E-mail já existe na base de dados.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e7771b92-0300-426f-9615-3d7efb4b8ba0",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"personId\" : {{personId}},\n\t\"email\" : \"\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/email/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"email",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createInvalidPersonId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+								"exec": [
+									"// test of status",
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"personId\" : -1,\n\t\"email\" : \"teste@test.com\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/email/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"email",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createWithoutPersonId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+								"exec": [
+									"// test of status",
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Error message confirmed\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"PersonId não pode ser nulo.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\" : \"teste@test.com\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/email/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"email",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createWithoutEmail",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+								"exec": [
+									"// test of status",
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Error message confirmed\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Email não pode ser nulo.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"personId\" : {{personId}}\n}"
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/email/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"email",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateAlreadyExists",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+								"exec": [
+									"// test of status",
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Error message confirmed\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"E-mail já existe na base de dados.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "ae8cb6b6-f8b9-4c6b-943d-9d3e21f39a02",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"emailId\" : {{emailIdToDelete}},\n\t\"personId\" : {{personId}},\n\t\"email\" : \"des_alexandre.cirne@edu.pucrs.br\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/email/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"email",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateInvalidId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+								"exec": [
+									"// test of status",
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"emailId\" : -1,\n\t\"personId\" : {{personId}},\n\t\"email\" : \"testeUpdated@test.com\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/email/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"email",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateInvalidPersonId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+								"exec": [
+									"// test of status",
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"emailId\" : {{emailIdToDelete}},\n\t\"personId\" : -1,\n\t\"email\" : \"testeUpdated@test.com\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/email/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"email",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateWithoutPersonId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+								"exec": [
+									"// test of status",
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Error message confirmed\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"PersonId não pode ser nulo.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"emailId\" : {{emailIdToDelete}},\n\t\"email\" : \"testeUpdated@test.com\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/email/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"email",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateWithoutEmail",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+								"exec": [
+									"// test of status",
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Error message confirmed\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Email não pode ser nulo.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"emailId\" : {{emailIdToDelete}},\n\t\"personId\" : {{personId}}\n}"
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/email/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"email",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteInvalid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+								"exec": [
+									"// test of status",
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"emailId\" : -1\n}"
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/email/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"email",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "4b7b3e49-f295-47ba-ad3c-5ed7046b03f4",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "256eca7c-feff-4d54-bcec-301eeeeb09ac",
+				"type": "text/javascript",
+				"exec": [
+					"// simple tests of speed",
+					"pm.test(\"Response time is less than 400ms\", function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(400);",
+					"});",
+					""
+				]
+			}
+		}
+	]
+}

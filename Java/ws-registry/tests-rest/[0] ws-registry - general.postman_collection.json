@@ -1,0 +1,86 @@
+{
+	"info": {
+		"_postman_id": "f2b4a477-521d-4990-b4fd-e84f8fceea18",
+		"name": "[0] ws-registry - general",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getVersion",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6c00118b-daa4-4c84-83fe-71e9520fa55a",
+						"exec": [
+							"//parse response",
+							"let jsonData = pm.response.json();",
+							"",
+							"// simple test of version",
+							"pm.test(\"Version is correct\", function () {",
+							"     pm.expect(jsonData.version).to.equals(\"1.0\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/ws-registry/version/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"ws-registry",
+						"version",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "66cebfd8-7167-4a94-b3d2-a4421d9cd9f7",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "f1160f5c-9074-4b09-b0c2-ae04cd4d3613",
+				"type": "text/javascript",
+				"exec": [
+					"// simple tests of speed",
+					"pm.test(\"Response time is less than 400ms\", function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(400);",
+					"});",
+					""
+				]
+			}
+		}
+	]
+}

@@ -1,0 +1,387 @@
+{
+	"info": {
+		"_postman_id": "f4c316ab-e017-44f1-b374-80896fb75e9b",
+		"name": "[10] ws-registry - person",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "SuccessRequests",
+			"item": [
+				{
+					"name": "findAll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "57bfcf25-6e8c-45c0-ab0a-8eb27a34aba4",
+								"exec": [
+									"//parse response",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Size bigger than 0\", function () {",
+									"    pm.expect(jsonData.content.length).to.gt(0);",
+									"});",
+									"",
+									"// update test variables",
+									"pm.environment.set( \"personId\", jsonData.content[0].personId );"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/ws-siu/registry/?page=1&size=1000",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-siu",
+								"registry",
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "1000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findOne",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "5c14f9d6-dffc-455d-b3cb-72c05ca994f9",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "d5936bd2-eb59-4cda-bfce-0693bb66e04a",
+								"exec": [
+									"//parse response",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"PersonId OK\", function () {",
+									"    pm.expect(jsonData.personId).to.eq( pm.environment.get( \"personId\" ) );",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/person/{{personId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"person",
+								"{{personId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findOneWithAllInfo",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "5c14f9d6-dffc-455d-b3cb-72c05ca994f9",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "d5936bd2-eb59-4cda-bfce-0693bb66e04a",
+								"exec": [
+									"//parse response",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"PersonId OK\", function () {",
+									"    pm.expect(jsonData.person.personId).to.eq( pm.environment.get( \"personId\" ) );",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/person/{{personId}}/info",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"person",
+								"{{personId}}",
+								"info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAllByCPF",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5568bb39-7656-427c-99d4-3e0140356c62",
+								"exec": [
+									"//parse response",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Size greather than 0\", function () {",
+									"    pm.expect(jsonData.content.length).to.gt( 0 );",
+									"});",
+									"",
+									"pm.test(\"Name OK\", function () {",
+									"    let content = jsonData.content;",
+									"    for ( let i= 0; i < content.length; i++ ) {",
+									"        pm.expect(content[i].name).to.include( 'ALEX' );",
+									"    }",
+									"});",
+									"",
+									"pm.test(\"CPF OK\", function () {",
+									"    let content = jsonData.content;",
+									"    for ( let i= 0; i < content.length; i++ ) {",
+									"        pm.expect(content[i].cpf).to.include( '' );",
+									"    }",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/person/?cpf=",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"person",
+								""
+							],
+							"query": [
+								{
+									"key": "cpf",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAllPaging",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "de773c4c-acc7-4cb4-9586-efa1f0c928c6",
+								"exec": [
+									"//parse response",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Size bigger than 0\", function () {",
+									"    pm.expect(jsonData.content.length).to.gt(0);",
+									"});",
+									"",
+									"pm.test(\"Size equals to 10\", function () {",
+									"    pm.expect(jsonData.content.length).to.eq(10);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/person/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"person",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "8dc6b244-562b-4e5a-9eb4-1ff0cb80b02d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "314b5df2-c02f-4e86-a2c7-63bb8c9185ed",
+						"type": "text/javascript",
+						"exec": [
+							"// test of status",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "ErrorRequests",
+			"item": [
+				{
+					"name": "findOneInvalid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "56f294d5-3b83-4a4f-8a4b-4262395d1034",
+								"exec": [
+									"// test of status",
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "c81d131a-8324-4951-b611-79a559972b7b",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/ws-registry/person/-1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws-registry",
+								"person",
+								"-1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "4098abb0-da24-4f65-877b-d3f7af58ce5b",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "640fc883-fc30-4ffb-972c-45ae534a48e6",
+				"type": "text/javascript",
+				"exec": [
+					"// simple tests of speed",
+					"pm.test(\"Response time is less than 400ms\", function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(400);",
+					"});",
+					""
+				]
+			}
+		}
+	]
+}
