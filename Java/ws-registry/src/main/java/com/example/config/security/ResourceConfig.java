@@ -1,23 +1,12 @@
 package com.example.config.security;
 
-import java.util.Arrays;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
 /**
  * Configuration class for HTTP resources/requests.
  */
-@Configuration
-@Order(Ordered.HIGHEST_PRECEDENCE)
-public class ResourceConfig extends ResourceServerConfigurerAdapter {
+//@Configuration
+//@Order(Ordered.HIGHEST_PRECEDENCE)
+public class ResourceConfig {}
+/*extends ResourceServerConfigurerAdapter {
 
 	@Value("${app.cors.granted.urls}")
 	private String[] grantedOrigins;
@@ -50,4 +39,4 @@ public class ResourceConfig extends ResourceServerConfigurerAdapter {
 		//.antMatchers("/login").permitAll().anyRequest().authenticated().and().formLogin().permitAll();
 	}
 
-}
+}*/

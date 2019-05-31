@@ -27,7 +27,6 @@
 	<properties>
 		<java.version>11</java.version>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-      <spring-security-oauth2.version>2.3.4.RELEASE</spring-security-oauth2.version>
       <spring-swagger.version>2.9.2</spring-swagger.version>
 	</properties>
 
@@ -85,20 +84,6 @@
          <artifactId>javax.servlet-api</artifactId>
          <scope>provided</scope>
       </dependency>
-      
-      <dependency>
-         <groupId>org.springframework.boot</groupId>
-         <artifactId>spring-boot-starter-security</artifactId>
-      </dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-oauth2-client</artifactId>
-		</dependency>
-       <dependency>
-         <groupId>org.springframework.security.oauth</groupId>
-         <artifactId>spring-security-oauth2</artifactId>
-         <version>${spring-security-oauth2.version}</version>
-       </dependency>
 		
 		<dependency>
          <groupId>io.springfox</groupId>
@@ -137,16 +122,6 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 
 </project>
