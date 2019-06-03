@@ -1,0 +1,15 @@
+export const COMM_REGISTRY_CONSTANTS = {
+    congratulationsMsg: 'Parabéns',
+    cpfErrorRequired: 'CPF é obrigatório.',
+    cpfLabel: 'CPF',
+    createSuccessMessage: 'Pessoa criada com sucesso.',
+    formGenericError: 'Formulário não foi preenchido corretamente.',
+    nameErrorRequired: 'Nome completo é obrigatório.',
+    nameIsEmpty: 'Nome completo não pode ser vazio ou conter somente espaços.',
+    nameIsInvalid: 'Pelo menos um sobrenome deve ser informado.',
+    nameLabel: 'Nome Completo',
+    okBtn: 'Confirmar',
+    registryBtn: 'Cadastrar',
+    serverGenericError: 'Não foi possível conectar-se ao servidor, tente novamente mais tarde.',
+    titleMsg: 'Criação de Pessoa',
+};

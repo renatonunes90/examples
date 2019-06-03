@@ -1,0 +1,21 @@
+<form id="frm-comm" [formGroup]="createPersonForm" (ngSubmit)="doRegistry()" #f="ngForm" novalidate>
+    <div class="message-box-absolute" role="alert">
+        <span class="message message--error">{{errorMessage}}</span>
+    </div>
+    <div class="position-relative mb-2">
+        <input class="p-form-control" id="txt_name" name="txt_name" placeholder="{{constants.nameLabel}}" type="text"
+            formControlName="name" [ngClass]="{ 'is-invalid': nameInput.invalid && nameInput.touched }" />
+        <span *ngIf="nameInput.invalid && nameInput.touched" class="invalid-feedback">
+            <span *ngIf="nameInput.errors.required">{{constants.nameErrorRequired}}</span>
+        </span>
+    </div>
+    <div class="position-relative mb-2">
+        <input class="p-form-control" id="txt_cpf" name="txt_cpf" placeholder="{{constants.cpfLabel}}" type="number"
+            formControlName="cpf" [ngClass]="{ 'is-invalid': cpfInput.invalid && cpfInput.touched }" />
+        <span *ngIf="cpfInput.invalid && cpfInput.touched" class="invalid-feedback">
+            <span *ngIf="cpfInput.errors.required">{{constants.cpfErrorRequired}}</span>
+        </span>
+    </div>
+    <input class="p-btn-custom p-btn-full" id="btn_registry" name="btn_registry" type="submit"
+        value="{{constants.registryBtn}}" />
+</form>

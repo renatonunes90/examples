@@ -1,0 +1,24 @@
+<div class="row flex-fill">
+  <div class="col-sm-12 flex-fill">
+    <div class="container">
+      <div class="row justify-content-md-center">
+        <div class="col-md-5">
+          <div class="text-center mt-5 mb-3">
+            <div class="message-title mb-2">{{titleMessage}}</div>
+            <div>{{envName}}</div>
+          </div>
+          <div class="box-shadow main__box">
+            <lib-create-person-form *ngIf="!showConfirmation; else confirmationBlock"
+              (goToSuccessPage)="waitConfirmation($event)">
+            </lib-create-person-form>
+            <ng-template #confirmationBlock>
+              <lib-confirm-creation [personId]="personId" (personCreated)="emitPerson($event)"
+                (goToForm)="backToForm()">
+              </lib-confirm-creation>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<ng-http-loader [backgroundColor]="'#d1e0e0'" [spinner]="spinkit.skRotatingPlane" [debounceDelay]="100"
+    [minDuration]="300" [extraDuration]="300"></ng-http-loader>
+
+<div>
+    <div *ngIf="!personCreated; else personInfoBlock">
+        <lib-comm-registry [env]="commEnv" (person)='getPerson($event)'></lib-comm-registry>
+    </div>
+
+    <ng-template #personInfoBlock>
+        <div>Pessoa = {{person.name}}</div>
+        <input class="btn" id="btn_back" name="btn_back" type="button" value="Voltar" (click)="back()" />
+    </ng-template>
+
+</div>
