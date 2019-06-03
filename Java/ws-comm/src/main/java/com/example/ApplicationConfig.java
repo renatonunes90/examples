@@ -11,11 +11,13 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 
 /**
  * Classe principal da aplicação Spring.
  */
 @SpringBootApplication
+@EnableResourceServer
 @EnableFeignClients(basePackages = { "com.example.comm" })
 @Configuration
 @ComponentScan(basePackages = { "com.example.services", "com.example.controllers", "com.example" })

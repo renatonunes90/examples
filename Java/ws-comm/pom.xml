@@ -39,6 +39,7 @@
 		<java.version>11</java.version>
 		<spring-boot.version>2.1.0.RELEASE</spring-boot.version>
 		<spring-swagger.version>2.9.2</spring-swagger.version>
+      <spring-security-oauth2.version>2.3.4.RELEASE</spring-security-oauth2.version>
 	</properties>
 
 	<build>
@@ -86,6 +87,22 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<scope>provided</scope>
 		</dependency>	
+      <!-- Security libs -->
+      <!-- Spring framework -->
+      <dependency>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-security</artifactId>
+      </dependency>
+      <!-- Oauth 2 -->
+      <dependency>
+         <groupId>org.springframework.security.oauth.boot</groupId>
+         <artifactId>spring-security-oauth2-autoconfigure</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>org.springframework.security.oauth</groupId>
+         <artifactId>spring-security-oauth2</artifactId>
+         <version>${spring-security-oauth2.version}</version>
+      </dependency>
 		<!-- REST libs -->
     <dependency>
       <groupId>org.springframework.cloud</groupId>
