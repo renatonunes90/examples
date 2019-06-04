@@ -121,7 +121,6 @@ CREATE TABLE PHONE
     PERSON_ID integer,
     PHONE_TYPE_ID integer,
     NUMBER varchar(32),
-    EMAIL varchar(255),
     DDD varchar(3),
     DDI varchar(3),
 	UPDATED_DATE timestamp
