@@ -57,7 +57,7 @@ export class PersonInfoComponent implements OnInit {
         this.translatedPerson.fatherName = this.verifyValid(this.person.fatherName);
         this.translatedPerson.motherName = this.verifyValid(this.person.motherName);
 
-        this.birthDateConverted = formatDate(new Date(this.person.birthDate), 'dd/MM/yyyy', 'en-US', 'UTC');
+        this.birthDateConverted = this.person.birthDate ? formatDate(new Date(this.person.birthDate), 'dd/MM/yyyy', 'en-US', 'UTC') : '';
         this.breed = this.person.breed !== null ? this.person.breed.breedText : '-';
         this.maritalStatus = this.person.maritalStatus !== null ? this.person.maritalStatus.maritalStatusText : '-';
     }

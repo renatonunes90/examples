@@ -49,10 +49,6 @@ export class PersonTabComponent implements OnInit {
      */
     public editPerson(): void {
         this.person = this.selectedPerson.getPerson();
-        this.person.projectCd = environment.projectCode;
-        this.person.ipCd = window.location.origin;
-        this.person.operatorCd = this.authenticationService.getOperatorCd();
-
         this.showForm = true;
     }
 
