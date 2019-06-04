@@ -1,0 +1,17 @@
+version: "3.5"
+services:
+    registry:
+        image: registry-front-end
+        container_name: "registry"
+        networks:
+            - traefik
+        labels:
+            - "traefik.enable=true"
+            - "traefik.backend=registry"
+            - "traefik.frontend.rule=Host:registry.localhost;"
+            - "traefik.port=80"
+networks:
+  traefik:
+    external:
+      name: traefik_webgateway
+            

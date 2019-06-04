@@ -1,0 +1,32 @@
+<div class="table-wrapper-scroll-y">
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th class="text-right" scope="col">{{constants.ddiLabel}}</th>
+                <th class="text-right" scope="col">{{constants.dddLabel}}</th>
+                <th class="text-right" scope="col">{{constants.phoneLabel}}</th>
+                <th scope="col">{{constants.phoneTypeLabel}}</th>
+                <th class="text-center" scope="col"></th>
+                <th class="text-center" scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let phone of data">
+                <td class="text-right" [innerHTML]="genFunc.validateValue(phone.ddi)"></td>
+                <td class="text-right" [innerHTML]="genFunc.validateValue(phone.ddd)"></td>
+                <td class="text-right">{{phone.number}}</td>
+                <td>{{phone.phoneType.phoneTypeText}}</td>
+                <td class="text-center">
+                    <button type="button" class="btn btn-info" (click)="editClicked(phone)">E</button>
+                </td>
+                <td class="text-center">
+                    <button type="button" class="btn btn-danger" (click)="removeClicked(phone)">R</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="add-btn d-flex justify-content-center">
+    <button type="button" class="btn btn-primary" (click)="addClicked()">{{constants.add}}</button>
+</div>

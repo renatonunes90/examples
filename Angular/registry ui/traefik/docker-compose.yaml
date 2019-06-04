@@ -1,0 +1,34 @@
+version: "3.5"
+services:
+    traefik:
+      image: traefik
+      command: --web --docker --docker.domain=docker.localhost --logLevel=DEBUG
+      networks:
+        - webgateway
+      ports:
+        - "80:80"
+        - "8080:8080"
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+        - /traefik.toml:/traefik.toml
+        
+    machine:
+      image: emilevauge/whoami
+      labels:
+        - "traefik.backend=machine"
+        - "traefik.frontend.rule=Host:localhost; PathPrefix:/whoami"
+
+networks:
+  webgateway:
+    driver: bridge
+      
+    #registry:
+    #  image: registry-front-end
+    #  container_name: "registry"
+    #  labels:
+    #    - "traefik.enable=true"
+    #    - "traefik.backend=registry"
+    #    - "traefik.frontend.rule=Host:localhost;PathPrefix:/registry"
+    #    - "traefik.port=80"
+    #  depends_on:
+    #    - traefik

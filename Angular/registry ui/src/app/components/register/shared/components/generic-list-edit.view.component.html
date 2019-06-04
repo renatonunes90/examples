@@ -1,0 +1,7 @@
+<app-generic-list #genericList *ngIf="!showForm; else formBlock" [emptyObject]="getEmptyObject()" [service]="getService()"
+    [label]="getLabel()" [pluralFormLabel]="getPluralFormLabel()" (emitter)="editObj($event)">
+</app-generic-list>
+<ng-template #formBlock>
+    <app-generic-form [object]="manipulatedObj" [service]="getService()" [label]="getLabel()" (back)="backList()">
+    </app-generic-form>
+</ng-template>

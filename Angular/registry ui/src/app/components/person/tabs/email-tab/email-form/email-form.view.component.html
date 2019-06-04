@@ -1,0 +1,21 @@
+<div class="titleDiv">{{constants.emailEdit}}</div>
+
+<form [formGroup]="emailForm" (ngSubmit)="onSubmit()" #f="ngForm" novalidate>
+    <div class="row d-flex justify-content-center">
+        <div class="form-group col-8">
+            <label for="email" class="col-form-label">{{constants.emailLabel}}:</label>
+            <input type="text" class="form-control" formControlName="email"
+                [ngClass]="{ 'is-invalid': emailInput.invalid && emailInput.touched }">
+            <span *ngIf="emailInput.invalid && emailInput.touched" class="invalid-feedback">
+                <span *ngIf="emailInput.errors.required">{{constants.emailErrorRequired}}</span>
+                <span *ngIf="emailInput.errors.pattern">{{constants.emailErrorPattern}}</span>
+            </span>
+        </div>
+    </div>
+
+    <div class="divBtn d-flex justify-content-center">
+        <button type="button" class="btn btn-secondary" (click)="cancelClicked()">{{constants.cancel}}</button>
+        <button class="btn btn-primary addBtn ml-2">{{constants.save}}</button>
+    </div>
+
+</form>

@@ -1,0 +1,86 @@
+<div class="titleDiv">{{constants.personForm}}</div>
+
+<form [formGroup]="personForm" (ngSubmit)="onSubmit()" #f="ngForm" novalidate>
+
+    <div class='row'>
+        <div class="form-group col-sm-7">
+            <label class="col-form-label">Nome:</label>
+            <input type="text" class="form-control" formControlName="name"
+                [ngClass]="{ 'is-invalid': nameInput.invalid && nameInput.touched }">
+            <span *ngIf="nameInput.invalid && nameInput.touched" class="invalid-feedback">
+                <span *ngIf="nameInput.errors.required">{{constants.nameErrorRequired}}</span>
+            </span>
+        </div>
+        <div class="form-group col-sm-3">
+            <label class="col-form-label">{{constants.cpf}}:</label>
+            <input type="text" class="form-control" formControlName="cpf" maxlength=11 (keypress)="onlyNumber(event)">
+        </div>
+    </div>
+
+    <div class='row'>
+        <div class="form-group col-sm-3">
+            <label class="col-form-label">{{constants.birthDate}}:</label>
+            <input type="date" class="form-control" formControlName="birthDate"
+                [ngClass]="{ 'is-invalid': birthDateInput.invalid && birthDateInput.touched }">
+            <span *ngIf="birthDateInput.invalid && birthDateInput.touched" class="invalid-feedback">
+                <span *ngIf="birthDateInput.errors.required">{{constants.birthDateErrorRequired}}</span>
+            </span>
+        </div>
+        <div class="form-group col-sm-4">
+            <label class="col-form-label">{{constants.genderType}}:</label>
+            <select class="form-control custom-select" formControlName="genderType"
+                [ngClass]="{ 'is-invalid': genderTypeInput.invalid && genderTypeInput.touched }">
+                <option value="F">{{constants.female}}</option>
+                <option value="M">{{constants.male}}</option>
+            </select>
+            <span *ngIf="genderTypeInput.invalid && genderTypeInput.touched" class="invalid-feedback">
+                <span *ngIf="genderTypeInput.errors.required">{{constants.genderTypeErrorRequired}}</span>
+            </span>
+        </div>
+        <div class="form-group col-sm-3">
+            <label class="col-form-label">{{constants.maritalStatus}}:</label>
+            <select class="form-control custom-select" formControlName="maritalStatus">
+                <option></option>
+                <option *ngFor="let marStatus of maritalStatus" [value]="marStatus.maritalStatusId">
+                    {{marStatus.maritalStatusText}}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class='row'>
+        <div class="form-group col-sm-7">
+            <label class="col-form-label">{{constants.fatherName}}:</label>
+            <input type="text" class="form-control" formControlName="fatherName">
+        </div>
+    </div>
+
+    <div class='row'>
+        <div class="form-group col-sm-7">
+            <label class="col-form-label">{{constants.motherName}}:</label>
+            <input type="text" class="form-control" formControlName="motherName">
+        </div>
+    </div>
+
+    <div class='row'>
+        <div class="form-group col-sm-3">
+            <label class="col-form-label">{{constants.birthCountry}}:</label>
+            <input type="text" class="form-control" formControlName="birthCountry">
+        </div>
+        <div class="form-group col-sm-4">
+            <label class="col-form-label">{{constants.birthCity}}:</label>
+            <input type="text" class="form-control" formControlName="birthCity">
+        </div>
+        <div class="form-group col-sm-3">
+            <label class="col-form-label">{{constants.breed}}:</label>
+            <select class="form-control custom-select" formControlName="breed">
+                <option></option>
+                <option *ngFor="let breed of breeds" [value]="breed.breedId">{{breed.breedText}}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="divBtn d-flex justify-content-center">
+        <button type="button" class="btn btn-secondary" (click)="cancelClicked()">{{constants.cancel}}</button>
+        <button class="btn btn-primary ml-2">{{constants.save}}</button>
+    </div>
+</form>

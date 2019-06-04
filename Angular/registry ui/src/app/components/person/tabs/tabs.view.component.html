@@ -1,0 +1,17 @@
+<div class="person-header d-flex flex-row">
+    <h4 *ngIf='person != undefined' class='d-flex align-items-center'><b>{{person.name}}</b></h4>
+    <div class="flex-fill d-flex justify-content-end">
+        <button type="button" class="btn btn-primary" (click)="backClicked()">{{constants.back}}</button>
+    </div>
+</div>
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li *ngFor="let link of links" class="nav-item" [ngClass]="{disabled:!link.enabled}">
+        <a class=" nav-link" [ngClass]="{active:link.selected, disabled:!link.enabled}" (click)="selectTab(link.link)"
+            data-toggle="tab" [routerLink]="link.link" role="tab">{{link.label}}</a>
+    </li>
+</ul>
+
+<div class='tab-content'>
+    <router-outlet></router-outlet>
+</div>

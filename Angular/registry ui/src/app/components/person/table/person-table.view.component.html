@@ -1,0 +1,37 @@
+<table class="table table-hover table-striped">
+    <thead>
+        <tr>
+            <th class="col-xs-4">{{constants.name}}</th>
+            <th class="col-xs-3">{{constants.cpf}}</th>
+            <th *ngIf="showEditBtn" class="col-xs-1"></th>
+        </tr>
+    </thead>
+    <tbody class="table-wrapper-scroll-y" *ngIf="data.length > 0; else noDataBlock">
+        <tr *ngFor="let person of data" class="table-row" (dblclick)="personSelected(person)">
+            <td class="col-xs-4">{{person.name}}</td>
+            <td class="col-xs-3">{{person.cpf}}</td>
+            <td *ngIf="showEditBtn" class="col-xs-1 text-center">
+                <button type="button" class="btn btn-info" (click)="personSelected(person)">E</button>
+            </td>
+        </tr>
+    </tbody>
+    <ng-template #noDataBlock>
+        <tbody class="table-wrapper-scroll-y">
+            <tr class="col-xs-12">
+                <td colspan="5">
+                    {{constants.noData}}
+                </td>
+            </tr>
+        </tbody>
+    </ng-template>
+    <tfoot class="w-100">
+        <tr class="col-xs-12">
+            <td colspan="5" class="text-center">
+                <button class="btn btn-secondary" (click)="previousPage()" [disabled]="page.begin<=1">
+                    <</button> {{page.begin}} - {{page.end}} de {{page.totalElements}} <button class="btn btn-secondary"
+                        (click)="nextPage()" [disabled]="page.end==page.totalElements">>
+                </button>
+            </td>
+        </tr>
+    </tfoot>
+</table>

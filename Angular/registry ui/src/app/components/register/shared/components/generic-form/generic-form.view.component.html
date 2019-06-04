@@ -1,0 +1,21 @@
+<div class="title-div mt-4">{{constants.titleEdit}}{{label}}</div>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" #f="ngForm" novalidate>
+
+    <div class="row d-flex justify-content-center">
+        <div class="form-group col-8">
+            <label for="text" class="col-form-label">{{label}}:</label>
+            <input type="text" class="form-control" formControlName="text"
+                [ngClass]="{ 'is-invalid': textInput.invalid && textInput.touched }">
+            <span *ngIf="textInput.invalid && textInput.touched" class="invalid-feedback">
+                <span *ngIf="textInput.errors.required">{{label}}{{constants.errorRequired}}</span>
+            </span>
+        </div>
+    </div>
+
+    <div class="div-btn d-flex justify-content-center">
+        <button type="button" class="btn btn-secondary" (click)="cancelClicked()">{{constants.cancel}}</button>
+        <button class="btn btn-primary addBtn ml-2">{{constants.save}}</button>
+    </div>
+
+</form>

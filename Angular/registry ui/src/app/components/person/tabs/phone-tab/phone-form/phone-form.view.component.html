@@ -1,0 +1,40 @@
+<div class="titleDiv">{{constants.phoneEdit}}</div>
+
+<form [formGroup]="phoneForm" (ngSubmit)="onSubmit()" #f="ngForm" novalidate>
+    <div class="row d-flex justify-content-center">
+        <div class="form-group col-1">
+            <label for="ddi" class="col-form-label">{{constants.ddiLabel}}:</label>
+            <input type="number" class="form-control" formControlName="ddi">
+        </div>
+        <div class="form-group col-1">
+            <label for="ddd" class="col-form-label">{{constants.dddLabel}}:</label>
+            <input type="number" class="form-control" formControlName="ddd">
+        </div>
+        <div class="form-group col-3">
+            <label for="number" class="col-form-label">{{constants.phoneLabel}}:</label>
+            <input type="number" class="form-control" formControlName="number"
+                [ngClass]="{ 'is-invalid': numberInput.invalid && numberInput.touched }">
+            <span *ngIf="numberInput.invalid && numberInput.touched" class="invalid-feedback">
+                <span *ngIf="numberInput.errors.required">{{constants.phoneErrorRequired}}</span>
+            </span>
+        </div>
+        <div class="form-group col-2">
+            <label for="phoneType" class="col-form-label">{{constants.phoneTypeLabel}}:</label>
+            <select class="form-control custom-select" formControlName="phoneType"
+                [ngClass]="{ 'is-invalid': phoneTypeInput.invalid && phoneTypeInput.touched }">
+                <option></option>
+                <option *ngFor="let pType of phoneTypes" [value]="pType.phoneTypeId">
+                    {{pType.phoneTypeText}}</option>
+            </select>
+            <span *ngIf="phoneTypeInput.invalid && phoneTypeInput.touched" class="invalid-feedback">
+                <span *ngIf="phoneTypeInput.errors.required">{{constants.phoneTypeErrorRequired}}</span>
+            </span>
+        </div>
+    </div>
+
+    <div class="divBtn d-flex justify-content-center">
+        <button type="button" class="btn btn-secondary" (click)="cancelClicked()">{{constants.cancel}}</button>
+        <button class="btn btn-primary addBtn ml-2">{{constants.save}}</button>
+    </div>
+
+</form>

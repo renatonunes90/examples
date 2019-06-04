@@ -1,0 +1,5 @@
+<app-email-list #emailList *ngIf="!showForm; else formBlock" [person]="person" (email)="editEmail($event)">
+</app-email-list>
+<ng-template #formBlock>
+    <app-email-form [email]="email" (back)="backList()"> </app-email-form>
+</ng-template>

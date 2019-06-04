@@ -1,0 +1,5 @@
+<app-person-info *ngIf="!showForm; else formBlock" [person]="person" (edit)="editPerson($event)">
+</app-person-info>
+<ng-template #formBlock>
+    <app-person-form [person]="person" (back)="backList($event)"> </app-person-form>
+</ng-template>

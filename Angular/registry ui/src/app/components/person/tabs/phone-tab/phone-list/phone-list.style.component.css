@@ -1,0 +1,19 @@
+.tab-content {
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.addBtn {
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+.table-wrapper-scroll-y {
+    display: block;
+    max-height: 400px;
+    overflow-y: auto;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

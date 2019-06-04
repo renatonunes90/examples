@@ -1,0 +1,26 @@
+<div class="table-wrapper-scroll-y">
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th class="w-25" scope="col">{{constants.emailLabel}}</th>
+                <th class="text-center" scope="col"></th>
+                <th class="text-center" scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let email of data">
+                <td>{{email.email}}</td>
+                <td class="text-center">
+                    <button type="button" class="btn btn-info" (click)="editClicked(email)">E</button>
+                </td>
+                <td class="text-center">
+                    <button type="button" class="btn btn-danger" (click)="removeClicked(email)">R</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="add-btn d-flex justify-content-center">
+    <button type="button" class="btn btn-primary" (click)="addClicked()">{{constants.add}}</button>
+</div>

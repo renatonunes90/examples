@@ -1,0 +1,12 @@
+.titleDiv {
+    font-size: 24px;
+    margin-bottom: 10px;
+    border-bottom: solid 0.3px;
+}
+
+.divBtn {
+    border-top: solid 0.3px;
+    margin-top: 20px;
+    padding-top: 10px;
+    margin-bottom: 40px;
+}

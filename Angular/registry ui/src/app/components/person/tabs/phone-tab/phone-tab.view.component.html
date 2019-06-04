@@ -1,0 +1,5 @@
+<app-phone-list #phoneList *ngIf="!showForm; else formBlock" [person]="person" (phone)="editPhone($event)">
+</app-phone-list>
+<ng-template #formBlock>
+    <app-phone-form [phone]="phone" (back)="backList()"> </app-phone-form>
+</ng-template>

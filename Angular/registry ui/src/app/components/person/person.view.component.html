@@ -1,0 +1,20 @@
+<div *ngIf="!showAddForm; else formBlock" class="mt-3">
+
+    <div class="d-flex justify-content-center">
+        <button class="btn btn-primary" (click)="addClicked()">{{constants.addPerson}}</button>
+    </div>
+
+    <app-search-person-form (searchEmitter)="getSearchParams($event)"></app-search-person-form>
+
+    <div class="mt-4 mb-3">
+        <app-person-table [subscriber]="searchPersonEventEmmiter" [showEditBtn]="true"
+            (personEmitter)="personSelected($event)">
+        </app-person-table>
+    </div>
+</div>
+
+<ng-template #formBlock>
+    <div class="container mt-3">
+        <app-person-form [person]="person" (back)="backSearch($event)"> </app-person-form>
+    </div>
+</ng-template>

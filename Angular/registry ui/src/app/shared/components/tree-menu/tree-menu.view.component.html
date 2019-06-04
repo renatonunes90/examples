@@ -1,0 +1,28 @@
+<div class="treeMenuDiv d-flex flex-column flex-fill h-100">
+    <div class="treeHeader"></div>
+    <tree-root #tree [nodes]="nodes" [options]="options">
+
+        <ng-template #treeNodeWrapperTemplate let-node let-index="index">
+
+            <div class="node-wrapper" [style.padding-left]="node.getNodePadding()">
+                <tree-node-expander [node]="node"></tree-node-expander>
+                <div class="node-content-wrapper w-75" [class.node-content-wrapper-active]="node.isActive"
+                    [class.node-content-wrapper-focused]="node.isFocused" (click)="node.mouseAction('click', $event)"
+                    (dblclick)="node.mouseAction('dblClick', $event)">
+
+                    <div class="row ml-2" *ngIf="node.data.link; else elseBlock" routerLink="{{node.data.link}}"
+                        routerLinkActive="active">
+                        <img src="assets/images/{{node.data.icon}}">
+                        <span class="ml-1">{{node.data.name}}</span>
+                    </div>
+                    <ng-template #elseBlock>
+                        <div class="row ml-2">
+                            <img src="assets/images/{{node.data.icon}}">
+                            <span class="ml-1">{{node.data.name}}</span>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+        </ng-template>
+    </tree-root>
+</div>

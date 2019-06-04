@@ -1,0 +1,28 @@
+<h2 class="title-div mt-4">{{constants.titleList}}{{pluralFormLabel}}</h2>
+
+<div class="table-wrapper-scroll-y mt-4">
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th class="w-100" scope="col">{{label}}</th>
+                <th class="text-center" scope="col"></th>
+                <th class="text-center" scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let ms of data">
+                <td>{{ms.getText()}}</td>
+                <td class="text-center">
+                    <button type="button" class="btn btn-info" (click)="editClicked(ms)">E</button>
+                </td>
+                <td class="text-center">
+                    <button type="button" class="btn btn-danger" (click)="removeClicked(ms)">R</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="d-flex justify-content-center mt-4 mb-4">
+    <button type="button" class="btn btn-primary" (click)="addClicked()">{{constants.add}}</button>
+</div>
