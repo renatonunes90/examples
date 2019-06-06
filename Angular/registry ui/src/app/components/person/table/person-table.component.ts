@@ -64,7 +64,29 @@ export class PersonTableComponent implements OnInit {
                 // calculates the elements that are being showed
                 this.page.begin = response.body.numberOfElements > 0 ? (response.body.pageable.offset + 1) : 0;
                 this.page.end = response.body.numberOfElements > 0 ? (this.page.begin - 1) + response.body.numberOfElements : 0;
+            }, error => {
+                this.createFakeData();
             });
+    }
+
+    private createFakeData() {
+        this.page.pageNumber = 0;
+        this.page.size = 3;
+        this.page.totalElements = 3;
+
+        this.data = [this.createFakePerson(1, 'Fulano', '11111111111'),
+        this.createFakePerson(2, 'Beltrano', '22222222222'), this.createFakePerson(3, 'Ciclano', '33333333333')];
+
+        this.page.begin = 0;
+        this.page.end = 0;
+    }
+
+    private createFakePerson(personId, name, cpf) {
+        const fake = new Person();
+        fake.personId = personId;
+        fake.name = name;
+        fake.cpf = cpf;
+        return fake;
     }
 
     /**
