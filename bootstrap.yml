@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: ws-comm
+  cloud:
+    config:
+      uri: http://build.br:8880/configuration-service
+      label: develop

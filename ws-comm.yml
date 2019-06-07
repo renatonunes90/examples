@@ -1,0 +1,21 @@
+app:
+  cors:
+    granted:
+      urls:http://localhost:8080,http://localhost:8181,http://localhost:4200,http://localhost:7080,http://10.91.226.207:7080
+logging:
+  file: /log/server.log
+  level:
+    org:
+      hibernate: 'ERROR,DEBUG,WARN,INFO '
+      springframework:
+        web: DEBUG
+server:
+  servlet:
+    context-path: /ws-comm
+registry:
+  resource:
+    uri: http://localhost:8080/ws-registry/
+spring:
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true

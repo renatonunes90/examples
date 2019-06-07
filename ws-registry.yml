@@ -1,0 +1,32 @@
+app:
+  cors:
+    granted:
+      urls: http://localhost:8080,http://10.91.226.117:8080,http://localhost:4200
+logging:
+  file: /logs/ws-registry.log
+  level:
+    org:
+      hibernate: DEBUG
+      springframework:
+        web: DEBUG
+server:
+  servlet:
+    context-path: /ws-registry
+spring:
+  jpa:
+    database-platform: 
+    show-sql: true
+    properties:
+        hibernate:
+            format_sql: true
+  datasource:
+    hibernate:
+      show_sql: true
+    url: 
+    username: 
+    password: 
+    driver-class-name: 
+    driver: 
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
